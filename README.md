@@ -1,5 +1,6 @@
 # Running the API
 
+1. pipenv --three install
 1. python manage.py migrate
 1. python manage.py createsuperuser --email admin@example.com --username admin
 1. python manage.py runserver
@@ -8,7 +9,8 @@
 
 ## Write a mobile ToDo list application
 
-* User must be able to create an account and log in.
+~~* User must be able to create an account and log in.~~
+
 * User should be able to CRUD ToDo lists.
 * The list should have a title, unlimited number of entries, and allow attachments, like images and people.
 * User can filter saved lists by their name.
