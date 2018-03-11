@@ -136,6 +136,8 @@ REST_FRAMEWORK = {
         # For the HTML Docs
         'rest_framework.authentication.SessionAuthentication',
     ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20,
 }
 
 
