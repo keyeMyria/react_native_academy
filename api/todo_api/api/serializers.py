@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from rest_framework.relations import HyperlinkedRelatedField
+from rest_framework.relations import HyperlinkedRelatedField, HyperlinkedIdentityField
+from rest_framework_nested.relations import NestedHyperlinkedRelatedField, NestedHyperlinkedIdentityField
 
 from .models import TODOItem, TODOList
 
@@ -32,17 +33,17 @@ class TODOListSerializer(serializers.ModelSerializer):
     class Meta:
         model = TODOList
         fields = ('url', 'id', 'title', 'creator', 'items')
-        # fields = ('url', 'id', 'title', 'creator')
 
     creator = HyperlinkedRelatedField(
         view_name='user-detail',
         read_only=True,
     )
 
-    items = HyperlinkedRelatedField(
+    items = NestedHyperlinkedRelatedField(
         many=True,
-        view_name='todoitem-detail',
+        view_name='items-detail',
         read_only=True,
+        parent_lookup_kwargs={'list_pk': 'todo_list__pk'}
     )
 
 
@@ -51,7 +52,12 @@ class TODOItemSerializer(serializers.ModelSerializer):
         model = TODOItem
         fields = ('url', 'id', 'todo_list', 'content', 'completed')
 
+    url = NestedHyperlinkedIdentityField(
+        view_name='items-detail',
+        parent_lookup_kwargs={'list_pk': 'todo_list__pk'},
+    )
+
     todo_list = HyperlinkedRelatedField(
-        read_only=True,  # Or add a queryset
+        read_only=True,
         view_name='todolist-detail',
     )

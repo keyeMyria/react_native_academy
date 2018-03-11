@@ -25,13 +25,16 @@ from .api import views
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'lists', views.TODOListViewSet)
-router.register(r'items', views.TODOItemViewSet)
+
+lists_router = routers.NestedSimpleRouter(router, r'lists', lookup='list')
+lists_router.register(r'items', views.TODOItemViewSet, base_name='items')
 
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
 
     re_path(r'^', include(router.urls)),
+    re_path(r'^', include(lists_router.urls)),
     path('api/auth/', include('rest_framework.urls'), name='auth'),
     path(r'api/token-auth/', obtain_jwt_token, name='token-auth'),
 ]
