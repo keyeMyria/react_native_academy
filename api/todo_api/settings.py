@@ -40,11 +40,14 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'django_filters',
+    'debug_toolbar',
 
     'todo_api.api',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -134,3 +137,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ),
 }
+
+
+# Django Debug Toolbar shows only for these IPs
+INTERNAL_IPS = [
+    '127.0.0.1',
+]

@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from rest_framework.relations import HyperlinkedRelatedField
+
+from .models import TODOItem, TODOList
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('url', 'username', 'password', 'email', 'groups')
@@ -24,3 +27,31 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
         return user
 
+
+class TODOListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TODOList
+        fields = ('url', 'id', 'title', 'creator', 'items')
+        # fields = ('url', 'id', 'title', 'creator')
+
+    creator = HyperlinkedRelatedField(
+        view_name='user-detail',
+        read_only=True,
+    )
+
+    items = HyperlinkedRelatedField(
+        many=True,
+        view_name='todoitem-detail',
+        read_only=True,
+    )
+
+
+class TODOItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TODOItem
+        fields = ('url', 'id', 'todo_list', 'content', 'completed')
+
+    todo_list = HyperlinkedRelatedField(
+        read_only=True,  # Or add a queryset
+        view_name='todolist-detail',
+    )

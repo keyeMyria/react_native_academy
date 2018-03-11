@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from rest_framework import permissions, viewsets
-from .serializers import UserSerializer
+
+from .models import TODOItem, TODOList
+from .serializers import TODOItemSerializer, TODOListSerializer, UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -18,3 +20,15 @@ class UserViewSet(viewsets.ModelViewSet):
         else:
             permission_classes = [permissions.IsAuthenticated]
         return [permission() for permission in permission_classes]
+
+
+class TODOListViewSet(viewsets.ModelViewSet):
+
+    serializer_class = TODOListSerializer
+    queryset = TODOList.objects.all()
+
+
+class TODOItemViewSet(viewsets.ModelViewSet):
+
+    serializer_class = TODOItemSerializer
+    queryset = TODOItem.objects.all()

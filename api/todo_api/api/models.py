@@ -16,6 +16,6 @@ class TODOItem(models.Model):
     class Meta:
         ordering = ['id']
 
-    todo_list = models.ForeignKey(TODOList, on_delete=models.CASCADE)
+    todo_list = models.ForeignKey(TODOList, related_name='items', on_delete=models.CASCADE)
     content = models.TextField(help_text='What has to be done?')
     completed = models.BooleanField(default=False)

@@ -12,10 +12,12 @@ djangorestframework = "*"
 django-filter = "*"
 "e1839a8" = {path = ".", editable = true}
 djangorestframework-jwt = "*"
+drf-nested-routers = "*"
 
 
 [dev-packages]
 
+django-debug-toolbar = "*"
 
 
 [requires]

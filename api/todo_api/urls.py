@@ -15,20 +15,29 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path, re_path
-from rest_framework import routers
+from rest_framework_nested import routers
 from rest_framework_jwt.views import obtain_jwt_token
 
-from todo_api.api import views
+from api.todo_api import settings
+from .api import views
 
 # Allows us to automatically generate URLs from ViewSets
-
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
+router.register(r'lists', views.TODOListViewSet)
+router.register(r'items', views.TODOItemViewSet)
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
 
     re_path(r'^', include(router.urls)),
-    path('api/auth/', include('rest_framework.urls')),
-    path(r'api/token-auth/', obtain_jwt_token),
+    path('api/auth/', include('rest_framework.urls'), name='auth'),
+    path(r'api/token-auth/', obtain_jwt_token, name='token-auth'),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        re_path(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
