@@ -27,8 +27,19 @@ class TODOListViewSet(viewsets.ModelViewSet):
     serializer_class = TODOListSerializer
     queryset = TODOList.objects.all()
 
+    def perform_create(self, serializer):
+        """Every TODOList is implicitly connected to the currently logged in user."""
+        serializer.save(creator=self.request.user)
+
 
 class TODOItemViewSet(viewsets.ModelViewSet):
 
     serializer_class = TODOItemSerializer
-    queryset = TODOItem.objects.all()
+
+    def get_queryset(self):
+        return TODOItem.objects.filter(todo_list=self.kwargs['list_pk'])
+
+    def perform_create(self, serializer):
+        """Every TODOItem is implicitly connected to the currently edited TODOList."""
+        serializer.save(todo_list_id=self.kwargs['list_pk'])
+
