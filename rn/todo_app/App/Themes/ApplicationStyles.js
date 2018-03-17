@@ -9,7 +9,8 @@ const ApplicationStyles = {
   screen: {
     mainContainer: {
       flex: 1,
-      backgroundColor: Colors.background
+      backgroundColor: Colors.background,
+      alignItems: 'center'
     },
     backgroundImage: {
       position: 'absolute',
@@ -33,6 +34,18 @@ const ApplicationStyles = {
       color: Colors.text,
       marginVertical: Metrics.smallMargin,
       textAlign: 'center'
+    },
+    input: {
+      backgroundColor: Colors.snow,
+      padding: 10,
+      height: 40,
+      width: 200,
+      margin: 10,
+      borderWidth: 1,
+      borderColor: Colors.facebook,
+      color: Colors.frost
+    },
+    button: {
     },
     subtitle: {
       color: Colors.snow,

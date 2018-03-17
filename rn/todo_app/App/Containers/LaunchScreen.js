@@ -1,17 +1,22 @@
 import React, { Component } from 'react'
-import { Text, TextInput, View } from 'react-native'
+import { Button, Text, TextInput, View } from 'react-native'
 
 import styles from './Styles/LaunchScreenStyles'
 
 export default class LaunchScreen extends Component {
+  logIn = () => {
+    this.props.navigation.navigate('ListsScreen')
+  }
+
   render () {
     return (
       <View style={styles.mainContainer}>
-          <Text style={styles.sectionText}>
+        <Text style={styles.sectionText}>
             You need to log in!
-            <TextInput placeholder={'Username'} />
-            <TextInput placeholder={'Password'} />
-          </Text>
+        </Text>
+        <TextInput style={styles.input} placeholder='Username' />
+        <TextInput style={styles.input} placeholder='Password' />
+        <Button title='Log In' onPress={this.logIn} />
       </View>
     )
   }
