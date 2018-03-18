@@ -3,22 +3,27 @@ import { Text, View } from 'react-native'
 import { connect } from 'react-redux'
 
 import TodoActions from '../Redux/TodoRedux'
-import styles from './Styles/ListsScreenStyles'
+import style from './Styles/ListsScreenStyles'
 import TodoList from '../Components/TodoList'
 
 class ListsScreen extends React.Component {
+  static defaultProps = {
+    lists: []
+  }
 
   componentWillMount() {
     this.props.getAllLists()
   }
 
   render () {
-    const lists = this.props.lists || []
+    const lists = this.props.lists
     const todoLists = lists.map(list => <TodoList key={list.id} list={list}/>)
+    const title = (lists.length) ? 'Here are your lists!' : 'You have no todo lists! Add them by pressing +'
 
     return (
-      <View style={styles.mainContainer}>
-        <Text style={styles.sectionText}>Here are your lists!</Text>
+      // TODO convert to SectionList for scrolling/refresh/sections?
+      <View style={style.mainContainer}>
+        <Text style={style.sectionText}>{title}</Text>
 
         {todoLists}
       </View>

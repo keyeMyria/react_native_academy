@@ -10,7 +10,6 @@ const ApplicationStyles = {
     mainContainer: {
       flex: 1,
       backgroundColor: Colors.background,
-      alignItems: 'center'
     },
     backgroundImage: {
       position: 'absolute',
