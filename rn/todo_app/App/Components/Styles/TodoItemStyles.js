@@ -15,5 +15,9 @@ export default StyleSheet.create({
   },
   todoItemContent: {
     marginLeft: 20
+  },
+  todoEditItemContent: {
+    marginLeft: 20,
+    backgroundColor: Colors.cloud
   }
 })

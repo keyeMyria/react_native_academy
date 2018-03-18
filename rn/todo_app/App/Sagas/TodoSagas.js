@@ -24,6 +24,18 @@ export function * toggleCompleted (api, { listId, itemId, completed }) {
   }
 }
 
+// TODO merge with toggle
+export function * updateItem (api, { listId, itemId, itemData }) {
+  const response = yield call(api.updateTodoItem, listId, itemId, itemData)
+
+  if (response.ok) {
+    // For simplicity, we are refetching all lists
+    yield put(TodoActions.allListsRequest())
+  } else {
+    yield put(TodoActions.requestError())
+  }
+}
+
 export function * deleteTodoItem (api, { listId, itemId }) {
   const response = yield call(api.deleteTodoItem, listId, itemId)
 

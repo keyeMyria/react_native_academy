@@ -7,6 +7,7 @@ const { Types, Creators } = createActions({
   allListsRequest: null,
   allListsSuccess: ['lists'],
   toggleCompletedRequest: ['listId', 'itemId', 'completed'],
+  updateItemRequest: ['listId', 'itemId', 'itemData'],
   toggleCompletedSuccess: null,
   deleteItemRequest: ['listId', 'itemId'],
   deleteListRequest: ['listId'],
@@ -51,6 +52,8 @@ export const addItemRequest = state => state
 
 export const addListRequest = state => state
 
+export const updateItemRequest = state => state
+
 export const toggleCompletedSuccess = (state, { lists }) => {
   // TODO for now we refresh ALL the lists, which is inefficient but we have to normalize state first
   return state.merge({ fetching: false, error: null, lists })
@@ -67,5 +70,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.DELETE_LIST_REQUEST]: deleteListRequest,
   [Types.ADD_ITEM_REQUEST]: addItemRequest,
   [Types.ADD_LIST_REQUEST]: addListRequest,
+  [Types.UPDATE_ITEM_REQUEST]: updateItemRequest,
   // [Types.TOGGLE_COMPLETED_SUCCESS]: toggleCompletedSuccess,
 })

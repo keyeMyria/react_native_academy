@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -14,6 +14,13 @@ export default class TodoItem extends React.Component {
     }.isRequired)
   }
 
+  componentWillMount() {
+    this.setState({
+      editing: false,
+      newItemContent: ''
+    })
+  }
+
   toggleCompleted = () => {
     const { listId, item } = this.props
     this.props.onToggleCompleted(listId, item.id, !item.completed)
@@ -24,6 +31,19 @@ export default class TodoItem extends React.Component {
     this.props.onDeleteItem(listId, item.id)
   }
 
+  updateItem = () => {
+    const { listId, item } = this.props
+
+    // TODO THIS CAUSES FREEZING WHEN SUBMITTING THE CHANGE. FIX THIS
+    // this.props.onUpdateItem(listId, item.id, {content: this.state.newItemContent})
+    this.props.onUpdateItem(listId, item.id, {content: 'FIXED TEST TEXT'})
+
+    this.setState({
+      editing: false,
+      newItemContent: '',
+    })
+  }
+
   render () {
     const checkIconName = (this.props.item.completed) ? "ios-checkmark-circle" : "ios-checkmark-circle-outline"
     const checkIcon = (
@@ -31,14 +51,38 @@ export default class TodoItem extends React.Component {
         <Icon name={checkIconName} size={40} color="#900" />
       </TouchableOpacity>
     )
+    const itemContent = <Text style={style.todoItemContent}>{this.props.children}</Text>
+    const itemEditContent = <TextInput
+      style={style.todoEditItemContent}
+      value={this.props.children}
+      onChange={newItemContent => this.setState({newItemContent})}
+    />
+    const editIcon = <TouchableOpacity onPress={() => this.setState({editing: true})}>
+      <Icon name={'ios-create-outline'} size={20} color='#900'/>
+    </TouchableOpacity>
+
+    const cancelEditIcon = <TouchableOpacity onPress={() => this.setState({editing: false, newItemContent: ''})}>
+      <Icon name={'ios-close'} size={20} color='#900'/>
+    </TouchableOpacity>
+
+    const saveEditIcon = <TouchableOpacity onPress={this.updateItem}>
+      <Icon name={'ios-checkbox-outline'} size={20} color='#900'/>
+    </TouchableOpacity>
+
+    const isEditing = this.state.editing
 
     return (
       <View style={style.todoItemContainer}>
-          {checkIcon}
-          <Text style={style.todoItemContent}>{this.props.children}</Text>
-          <TouchableOpacity onPress={this.deleteItem}>
-            <Icon name={'ios-remove-circle-outline'} size={20} color='#900'/>
-          </TouchableOpacity>
+        {checkIcon}
+
+        {isEditing ? itemEditContent : itemContent}
+
+        {isEditing ? cancelEditIcon : null}
+        {isEditing ? saveEditIcon : editIcon}
+
+        <TouchableOpacity onPress={this.deleteItem}>
+          <Icon name={'ios-remove-circle-outline'} size={20} color='#900'/>
+        </TouchableOpacity>
       </View>
     )
   }

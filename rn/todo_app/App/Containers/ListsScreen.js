@@ -17,7 +17,7 @@ class ListsScreen extends React.Component {
   }
 
   render () {
-    const lists = this.props.lists
+    const lists = this.props.lists || []
     const todoLists = lists.map(
       list =>
         <TodoList
@@ -27,6 +27,7 @@ class ListsScreen extends React.Component {
           onDeleteItem={(listId, itemId) => this.props.deleteItem(listId, itemId)}
           onDeleteList={listId => this.props.deleteList(listId)}
           onAddItem={(listId, itemData) => this.props.addItem(listId, itemData)}
+          onUpdateItem={(listId, itemId, itemData) => this.props.updateItem(listId, itemId, itemData)}
         />
     )
     const title = (lists.length) ? 'Here are your lists!' : 'You have no todo lists! Add them by pressing +'
@@ -39,7 +40,6 @@ class ListsScreen extends React.Component {
           <Icon name={'ios-add-circle-outline'} size={40} color='#900'/>
         </TouchableOpacity>
 
-
         {todoLists}
       </View>
     )
@@ -49,6 +49,8 @@ class ListsScreen extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   getAllLists: () => dispatch(TodoActions.allListsRequest()),
   toggleCompleted: (listId, itemId, completed) => dispatch(TodoActions.toggleCompletedRequest(listId, itemId, completed)),
+  updateItem: (listId, itemId, itemData) => dispatch(TodoActions.updateItemRequest(listId, itemId, itemData)),
+  // updateItem: (listId, itemId, itemData) => dispatch(TodoActions.toggleCompletedRequest(listId, itemId, itemData)),
   deleteItem: (listId, itemId) => dispatch(TodoActions.deleteItemRequest(listId, itemId)),
   deleteList: (listId) => dispatch(TodoActions.deleteListRequest(listId)),
   addItem: (listId, itemData) => dispatch(TodoActions.addItemRequest(listId, itemData))

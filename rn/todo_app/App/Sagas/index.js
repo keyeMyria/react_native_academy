@@ -2,7 +2,7 @@ import { all, takeLatest, takeEvery } from 'redux-saga/effects'
 import TodoApi from '../Services/TodoApi'
 import FixtureAPI from '../Services/FixtureApi'
 import DebugConfig from '../Config/DebugConfig'
-import { getAllLists, toggleCompleted, deleteTodoItem, deleteTodoList, addListItem, addList } from './TodoSagas'
+import { getAllLists, toggleCompleted, deleteTodoItem, deleteTodoList, addListItem, addList, updateItem } from './TodoSagas'
 import { TodoTypes } from '../Redux/TodoRedux'
 
 /* ------------- Types ------------- */
@@ -21,6 +21,7 @@ export default function * root () {
   yield all([
     takeLatest(TodoTypes.ALL_LISTS_REQUEST, getAllLists, todoApi),
     takeEvery(TodoTypes.TOGGLE_COMPLETED_REQUEST, toggleCompleted, todoApi),
+    takeEvery(TodoTypes.UPDATE_ITEM_REQUEST, updateItem, todoApi),
     takeEvery(TodoTypes.DELETE_ITEM_REQUEST, deleteTodoItem, todoApi),
     takeEvery(TodoTypes.DELETE_LIST_REQUEST, deleteTodoList, todoApi),
     takeEvery(TodoTypes.ADD_ITEM_REQUEST, addListItem, todoApi),

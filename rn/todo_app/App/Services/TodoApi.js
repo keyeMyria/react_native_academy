@@ -1,6 +1,8 @@
 import apisauce from 'apisauce'
 
 const create = (baseURL = 'http://127.0.0.1:8000/') => {
+  // TODO for android emulator, we need to use the loopback gtw, make it dynamic in __DEV__
+// const create = (baseURL = 'http://10.0.2.2:8000/') => {
   const api = apisauce.create({
     // base URL is read from the "constructor"
     baseURL,
