@@ -36,6 +36,17 @@ export function * updateItem (api, { listId, itemId, itemData }) {
   }
 }
 
+export function * updateList (api, { listId, listData }) {
+  const response = yield call(api.updateList, listId, listData)
+
+  if (response.ok) {
+    // For simplicity, we are refetching all lists
+    yield put(TodoActions.allListsRequest())
+  } else {
+    yield put(TodoActions.requestError())
+  }
+}
+
 export function * deleteTodoItem (api, { listId, itemId }) {
   const response = yield call(api.deleteTodoItem, listId, itemId)
 

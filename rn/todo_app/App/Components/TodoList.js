@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 export default class TodoList extends React.Component {
   static defaultProps = {
     list: {
-      items: []
+      items: [],
     }
   }
 
@@ -28,7 +28,8 @@ export default class TodoList extends React.Component {
 
   componentWillMount () {
     this.setState({
-      addingNewItem: false
+      addingNewItem: false,
+      editingTitle: false
     })
   }
 
@@ -59,6 +60,17 @@ export default class TodoList extends React.Component {
     })
   }
 
+  updateTitle = () => {
+    // TODO Same error as with editing the TodoItem, probably the way TextInput state
+    // is handled is problematic, or some cyclic references to state <-> state, etc.
+    this.props.onUpdateList(this.props.list.id, {title: 'static title'})
+    // this.props.onUpdateList(this.props.list.id, {title: this.state.newTitle})
+    this.setState({
+      editingTitle: false,
+      newTitle: ''
+    })
+  }
+
   render () {
     const { id, title, items } = this.props.list
     const todoItems = items.map(item =>
@@ -79,7 +91,7 @@ export default class TodoList extends React.Component {
       <View>
         <TextInput
           placeholder={'What should be done?'}
-          onChangeText={newItemContent => this.setState({...this.state, newItemContent})}
+          onChangeText={newItemContent => this.setState({newItemContent})}
         />
         <TouchableOpacity onPress={this.hideAddItemControls}>
           <Icon name={'ios-close'} size={20} color='#900'/>
@@ -88,13 +100,40 @@ export default class TodoList extends React.Component {
         <TouchableOpacity onPress={this.confirmNewItem}>
           <Icon name={'ios-create-outline'} size={20} color='#900'/>
         </TouchableOpacity>
-
       </View>
     )
 
+
+    // List Editing
+    const listTitle = <Text style={style.todoListTitle}>{title}</Text>
+    const listTitleEdit = <TextInput
+      style={style.listTitleEdit}
+      value={this.props.list.title}
+      onChange={newTitle => this.setState({newTitle})}
+    />
+
+    const editIcon = <TouchableOpacity onPress={() => this.setState({editingTitle: true})}>
+      <Icon name={'ios-create-outline'} size={20} color='#900'/>
+    </TouchableOpacity>
+
+    const cancelEditIcon = <TouchableOpacity onPress={() => this.setState({editingTitle: false, newTitle: ''})}>
+      <Icon name={'ios-close'} size={20} color='#900'/>
+    </TouchableOpacity>
+
+    const saveEditIcon = <TouchableOpacity onPress={this.updateTitle}>
+      <Icon name={'ios-checkbox-outline'} size={20} color='#900'/>
+    </TouchableOpacity>
+
+    const isEditing = this.state.editingTitle
+
     return (
       <View style={style.todoListContainer}>
-        <Text style={style.todoListTitle}>{title}</Text>
+
+        {isEditing ? listTitleEdit : listTitle}
+
+        {isEditing ? cancelEditIcon : null}
+        {isEditing ? saveEditIcon : editIcon}
+
         <TouchableOpacity onPress={this.deleteList}>
           <Icon name={'ios-remove-circle-outline'} size={20} color='#900'/>
         </TouchableOpacity>

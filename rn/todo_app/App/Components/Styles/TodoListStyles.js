@@ -25,5 +25,8 @@ export default StyleSheet.create({
   },
   todoItem: {
 
+  },
+  listTitleEdit: {
+    backgroundColor: Colors.cloud
   }
 })

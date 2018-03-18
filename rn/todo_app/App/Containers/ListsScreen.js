@@ -28,6 +28,7 @@ class ListsScreen extends React.Component {
           onDeleteList={listId => this.props.deleteList(listId)}
           onAddItem={(listId, itemData) => this.props.addItem(listId, itemData)}
           onUpdateItem={(listId, itemId, itemData) => this.props.updateItem(listId, itemId, itemData)}
+          onUpdateList={(listId, listData) => this.props.updateList(listId, listData)}
         />
     )
     const title = (lists.length) ? 'Here are your lists!' : 'You have no todo lists! Add them by pressing +'
@@ -53,6 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
   // updateItem: (listId, itemId, itemData) => dispatch(TodoActions.toggleCompletedRequest(listId, itemId, itemData)),
   deleteItem: (listId, itemId) => dispatch(TodoActions.deleteItemRequest(listId, itemId)),
   deleteList: (listId) => dispatch(TodoActions.deleteListRequest(listId)),
+  updateList: (listId, listData) => dispatch(TodoActions.updateListRequest(listId, listData)),
   addItem: (listId, itemData) => dispatch(TodoActions.addItemRequest(listId, itemData))
 })
 
