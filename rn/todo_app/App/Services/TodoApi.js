@@ -16,6 +16,7 @@ const create = (baseURL = 'http://127.0.0.1:8000/') => {
   const updateTodoItem = (listId, itemId, itemData) => api.patch(`lists/${listId}/items/${itemId}/`, itemData)
   const deleteTodoItem = (listId, itemId) => api.delete(`lists/${listId}/items/${itemId}/`)
   const deleteTodoList = (listId) => api.delete(`lists/${listId}/`)
+  const addListItem = (listId, itemData) => api.post(`lists/${listId}/items/`, itemData)
 
   return {
     // "Interface" of the API functions from step 2
@@ -23,6 +24,7 @@ const create = (baseURL = 'http://127.0.0.1:8000/') => {
     updateTodoItem,
     deleteTodoItem,
     deleteTodoList,
+    addListItem,
   }
 }
 

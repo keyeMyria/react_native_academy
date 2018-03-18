@@ -45,3 +45,14 @@ export function * deleteTodoList (api, { listId }) {
     yield put(TodoActions.requestError())
   }
 }
+
+export function * addListItem (api, { listId, itemData }) {
+  const response = yield call(api.addListItem, listId, itemData)
+
+  if (response.ok) {
+    // For simplicity, we are refetching all lists
+    yield put(TodoActions.allListsRequest())
+  } else {
+    yield put(TodoActions.requestError())
+  }
+}

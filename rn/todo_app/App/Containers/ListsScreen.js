@@ -15,12 +15,6 @@ class ListsScreen extends React.Component {
     this.props.getAllLists()
   }
 
-  toggleCompleted = (listId, itemId, completed) => this.props.toggleCompleted(listId, itemId, completed)
-
-  deleteItem = (listId, itemId) => this.props.deleteItem(listId, itemId)
-
-  deleteList = (listId) => this.props.deleteList(listId)
-
   render () {
     const lists = this.props.lists
     const todoLists = lists.map(
@@ -28,9 +22,10 @@ class ListsScreen extends React.Component {
         <TodoList
           key={list.id}
           list={list}
-          onToggleCompleted={this.toggleCompleted}
-          onDeleteItem={this.deleteItem}
-          onDeleteList={this.deleteList}
+          onToggleCompleted={(listId, itemId, completed) => this.props.toggleCompleted(listId, itemId, completed)}
+          onDeleteItem={(listId, itemId) => this.props.deleteItem(listId, itemId)}
+          onDeleteList={listId => this.props.deleteList(listId)}
+          onAddItem={(listId, itemData) => this.props.addItem(listId, itemData)}
         />
     )
     const title = (lists.length) ? 'Here are your lists!' : 'You have no todo lists! Add them by pressing +'
@@ -51,6 +46,7 @@ const mapDispatchToProps = (dispatch) => ({
   toggleCompleted: (listId, itemId, completed) => dispatch(TodoActions.toggleCompletedRequest(listId, itemId, completed)),
   deleteItem: (listId, itemId) => dispatch(TodoActions.deleteItemRequest(listId, itemId)),
   deleteList: (listId) => dispatch(TodoActions.deleteListRequest(listId)),
+  addItem: (listId, itemData) => dispatch(TodoActions.addItemRequest(listId, itemData))
 })
 
 const mapStateToProps = (state) => ({

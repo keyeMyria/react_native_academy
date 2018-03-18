@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View, TextInput } from 'react-native'
 import PropTypes from 'prop-types'
 
 import style from './Styles/TodoListStyles'
@@ -26,8 +26,37 @@ export default class TodoList extends React.Component {
     }.isRequired)
   }
 
-  deleteList = () => {
-    this.props.onDeleteList(this.props.list.id)
+  componentWillMount () {
+    this.setState({
+      addingNewItem: false
+    })
+  }
+
+  deleteList = () => this.props.onDeleteList(this.props.list.id)
+
+  showAddItemControls = () => {
+    this.setState({
+      addingNewItem: true
+    })
+  }
+
+  hideAddItemControls = () => {
+    this.setState({
+      addingNewItem: false,
+      newItemContent: ''
+    })
+  }
+
+  confirmNewItem = () => {
+    console.tron.log(this.props)
+    this.props.onAddItem(
+      this.props.list.id,
+      {content: this.state.newItemContent, completed: false}
+    )
+    this.setState({
+      addingNewItem: false,
+      newItemContent: ''
+    })
   }
 
   render () {
@@ -45,12 +74,36 @@ export default class TodoList extends React.Component {
       </TodoItem>
     )
 
+    const newItemControls = (
+      <View>
+        <TextInput
+          placeholder={'What should be done?'}
+          onChangeText={newItemContent => this.setState({...this.state, newItemContent})}
+        />
+        <TouchableOpacity onPress={this.hideAddItemControls}>
+          <Icon name={'ios-close'} size={20} color='#900'/>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={this.confirmNewItem}>
+          <Icon name={'ios-create-outline'} size={20} color='#900'/>
+        </TouchableOpacity>
+
+      </View>
+    )
+
     return (
       <View style={style.todoListContainer}>
         <Text style={style.todoListTitle}>{title}</Text>
         <TouchableOpacity onPress={this.deleteList}>
           <Icon name={'ios-remove-circle-outline'} size={20} color='#900'/>
         </TouchableOpacity>
+
+        <TouchableOpacity onPress={this.showAddItemControls}>
+          <Icon name={'ios-add-circle-outline'} size={20} color='#900'/>
+        </TouchableOpacity>
+
+        {this.state.addingNewItem && newItemControls}
+
 
         <View style={style.todoListItemsContainer}>
           {todoItems}
