@@ -15,9 +15,11 @@ class ListsScreen extends React.Component {
     this.props.getAllLists()
   }
 
+  toggleCompleted = (listId, itemId, completed) => this.props.toggleCompleted(listId, itemId, completed)
+
   render () {
     const lists = this.props.lists
-    const todoLists = lists.map(list => <TodoList key={list.id} list={list}/>)
+    const todoLists = lists.map(list => <TodoList key={list.id} list={list} onToggleCompleted={this.toggleCompleted} />)
     const title = (lists.length) ? 'Here are your lists!' : 'You have no todo lists! Add them by pressing +'
 
     return (
@@ -32,7 +34,8 @@ class ListsScreen extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getAllLists: () => dispatch(TodoActions.allListsRequest())
+  getAllLists: () => dispatch(TodoActions.allListsRequest()),
+  toggleCompleted: (listId, itemId, completed) => dispatch(TodoActions.toggleCompletedRequest(listId, itemId, completed))
 })
 
 const mapStateToProps = (state) => ({

@@ -6,6 +6,8 @@ import Immutable from 'seamless-immutable'
 const { Types, Creators } = createActions({
   allListsRequest: null,
   allListsSuccess: ['lists'],
+  toggleCompletedRequest: ['listId', 'itemId', 'completed'],
+  toggleCompletedSuccess: null,
   requestError: null
 })
 
@@ -35,10 +37,19 @@ export const allListsSuccess = (state, { lists }) => {
 export const requestError = (state) =>
   state.merge({ fetching: false, error: true, lists: null })
 
+export const toggleCompletedRequest = state => state
+
+export const toggleCompletedSuccess = (state, { lists }) => {
+  // TODO for now we refresh ALL the lists, which is inefficient but we have to normalize state first
+  return state.merge({ fetching: false, error: null, lists })
+}
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.ALL_LISTS_REQUEST]: allListsRequest,
   [Types.ALL_LISTS_SUCCESS]: allListsSuccess,
-  [Types.REQUEST_ERROR]: requestError
+  [Types.REQUEST_ERROR]: requestError,
+  [Types.TOGGLE_COMPLETED_REQUEST]: toggleCompletedRequest,
+  // [Types.TOGGLE_COMPLETED_SUCCESS]: toggleCompletedSuccess,
 })

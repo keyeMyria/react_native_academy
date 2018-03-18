@@ -13,10 +13,12 @@ const create = (baseURL = 'http://127.0.0.1:8000/') => {
   })
 
   const getAllLists = () => api.get('lists')
+  const updateTodoItem = (listId, itemId, itemData) => api.patch(`lists/${listId}/items/${itemId}/`, itemData)
 
   return {
     // "Interface" of the API functions from step 2
     getAllLists,
+    updateTodoItem,
   }
 }
 

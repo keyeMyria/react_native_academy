@@ -1,8 +1,8 @@
-import { all, takeLatest } from 'redux-saga/effects'
+import { all, takeLatest, takeEvery } from 'redux-saga/effects'
 import TodoApi from '../Services/TodoApi'
 import FixtureAPI from '../Services/FixtureApi'
 import DebugConfig from '../Config/DebugConfig'
-import { getAllLists } from './TodoSagas'
+import { getAllLists, toggleCompleted } from './TodoSagas'
 import { TodoTypes } from '../Redux/TodoRedux'
 
 /* ------------- Types ------------- */
@@ -19,9 +19,7 @@ const todoApi = DebugConfig.useFixtures ? FixtureAPI : TodoApi.create()
 
 export default function * root () {
   yield all([
-    // some sagas only receive an action
-    // takeLatest(StartupTypes.STARTUP, startup),
-
-    takeLatest(TodoTypes.ALL_LISTS_REQUEST, getAllLists, todoApi)
+    takeLatest(TodoTypes.ALL_LISTS_REQUEST, getAllLists, todoApi),
+    takeEvery(TodoTypes.TOGGLE_COMPLETED_REQUEST, toggleCompleted, todoApi),
   ])
 }
