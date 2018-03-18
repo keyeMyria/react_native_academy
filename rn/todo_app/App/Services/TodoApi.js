@@ -14,11 +14,13 @@ const create = (baseURL = 'http://127.0.0.1:8000/') => {
 
   const getAllLists = () => api.get('lists')
   const updateTodoItem = (listId, itemId, itemData) => api.patch(`lists/${listId}/items/${itemId}/`, itemData)
+  const deleteTodoItem = (listId, itemId) => api.delete(`lists/${listId}/items/${itemId}/`)
 
   return {
     // "Interface" of the API functions from step 2
     getAllLists,
     updateTodoItem,
+    deleteTodoItem,
   }
 }
 

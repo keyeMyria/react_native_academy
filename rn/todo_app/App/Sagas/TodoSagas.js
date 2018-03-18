@@ -23,3 +23,14 @@ export function * toggleCompleted (api, { listId, itemId, completed }) {
     yield put(TodoActions.requestError())
   }
 }
+
+export function * deleteTodoItem (api, { listId, itemId }) {
+  const response = yield call(api.deleteTodoItem, listId, itemId)
+
+  if (response.ok) {
+    // For simplicity, we are refetching all lists
+    yield put(TodoActions.allListsRequest())
+  } else {
+    yield put(TodoActions.requestError())
+  }
+}

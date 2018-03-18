@@ -10,6 +10,7 @@ export default StyleSheet.create({
     maxHeight: 75,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 10
   },
   todoItemContent: {
