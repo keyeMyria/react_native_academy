@@ -1,10 +1,11 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
 
 import TodoActions from '../Redux/TodoRedux'
 import style from './Styles/ListsScreenStyles'
 import TodoList from '../Components/TodoList'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 class ListsScreen extends React.Component {
   static defaultProps = {
@@ -29,11 +30,15 @@ class ListsScreen extends React.Component {
         />
     )
     const title = (lists.length) ? 'Here are your lists!' : 'You have no todo lists! Add them by pressing +'
-
     return (
       // TODO convert to SectionList for scrolling/refresh/sections?
       <View style={style.mainContainer}>
         <Text style={style.sectionText}>{title}</Text>
+
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('NewListScreen')}>
+          <Icon name={'ios-add-circle-outline'} size={40} color='#900'/>
+        </TouchableOpacity>
+
 
         {todoLists}
       </View>

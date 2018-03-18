@@ -54,4 +54,4 @@ class TODOListSerializer(serializers.ModelSerializer):
         view_name='user-detail',
         read_only=True,
     )
-    items = TODOItemSerializer(many=True)
+    items = TODOItemSerializer(many=True, read_only=True)
