@@ -1,9 +1,10 @@
 import React from 'react'
-import { Text, TouchableHighlight, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import PropTypes from 'prop-types'
 
 import style from './Styles/TodoListStyles'
 import TodoItem from './TodoItem'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 export default class TodoList extends React.Component {
   static defaultProps = {
@@ -25,6 +26,10 @@ export default class TodoList extends React.Component {
     }.isRequired)
   }
 
+  deleteList = () => {
+    this.props.onDeleteList(this.props.list.id)
+  }
+
   render () {
     const { id, title, items } = this.props.list
     const todoItems = items.map(item =>
@@ -43,6 +48,9 @@ export default class TodoList extends React.Component {
     return (
       <View style={style.todoListContainer}>
         <Text style={style.todoListTitle}>{title}</Text>
+        <TouchableOpacity onPress={this.deleteList}>
+          <Icon name={'ios-remove-circle-outline'} size={20} color='#900'/>
+        </TouchableOpacity>
 
         <View style={style.todoListItemsContainer}>
           {todoItems}
