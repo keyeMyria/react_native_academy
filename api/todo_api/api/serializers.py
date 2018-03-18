@@ -29,24 +29,6 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class TODOListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = TODOList
-        fields = ('url', 'id', 'title', 'creator', 'items')
-
-    creator = HyperlinkedRelatedField(
-        view_name='user-detail',
-        read_only=True,
-    )
-
-    items = NestedHyperlinkedRelatedField(
-        many=True,
-        view_name='items-detail',
-        read_only=True,
-        parent_lookup_kwargs={'list_pk': 'todo_list__pk'}
-    )
-
-
 class TODOItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = TODOItem
@@ -61,3 +43,15 @@ class TODOItemSerializer(serializers.ModelSerializer):
         read_only=True,
         view_name='todolist-detail',
     )
+
+
+class TODOListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TODOList
+        fields = ('url', 'id', 'title', 'creator', 'items')
+
+    creator = HyperlinkedRelatedField(
+        view_name='user-detail',
+        read_only=True,
+    )
+    items = TODOItemSerializer(many=True)
