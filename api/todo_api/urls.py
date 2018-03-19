@@ -18,7 +18,7 @@ from django.urls import include, path, re_path
 from rest_framework_nested import routers
 from rest_framework_jwt.views import obtain_jwt_token
 
-from api.todo_api import settings
+from . import settings
 from .api import views
 
 # Allows us to automatically generate URLs from ViewSets

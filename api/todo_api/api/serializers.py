@@ -32,7 +32,7 @@ class UserSerializer(serializers.ModelSerializer):
 class TODOItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = TODOItem
-        fields = ('url', 'id', 'todo_list', 'content', 'completed')
+        fields = ('url', 'id', 'todo_list', 'content', 'image', 'completed')
 
     url = NestedHyperlinkedIdentityField(
         view_name='items-detail',

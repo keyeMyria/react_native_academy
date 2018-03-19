@@ -19,3 +19,4 @@ class TODOItem(models.Model):
     todo_list = models.ForeignKey(TODOList, related_name='items', on_delete=models.CASCADE)
     content = models.TextField(help_text='What has to be done?')
     completed = models.BooleanField(default=False)
+    image = models.TextField(null=True)

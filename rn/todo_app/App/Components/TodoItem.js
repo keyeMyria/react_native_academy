@@ -1,7 +1,8 @@
 import React from 'react'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import PropTypes from 'prop-types'
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/Ionicons'
+import ImagePicker from 'react-native-image-picker'
 
 import style from './Styles/TodoItemStyles'
 
@@ -44,6 +45,34 @@ export default class TodoItem extends React.Component {
     })
   }
 
+  attach = () => {
+    const options = {
+      title: 'Select Image Attachment',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images'
+      }
+    };
+    ImagePicker.showImagePicker(options, (response) => {
+      console.tron.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.tron.log('User cancelled image picker');
+      } else if (response.error) {
+        console.tron.log('ImagePicker Error: ', response.error);
+      } else {
+        let source = { uri: response.uri };
+
+        // You can also display the image using data:
+        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+        const {listId, item} = this.props
+        // TODO this is very slow to download, maybe sqlite is thrashing disk? Try postgresql
+        this.props.onUpdateItem(listId, item.id, {image: response.data})
+      }
+  });
+
+  }
+
   render () {
     const checkIconName = (this.props.item.completed) ? "ios-checkmark-circle" : "ios-checkmark-circle-outline"
     const checkIcon = (
@@ -75,10 +104,16 @@ export default class TodoItem extends React.Component {
       <View style={style.todoItemContainer}>
         {checkIcon}
 
+        {(this.props.item.image !== null) ? 'Img.' : ''}
+
         {isEditing ? itemEditContent : itemContent}
 
         {isEditing ? cancelEditIcon : null}
         {isEditing ? saveEditIcon : editIcon}
+
+        <TouchableOpacity onPress={this.attach}>
+          <Icon name={'ios-attach-outline'} size={20} color='#900'/>
+        </TouchableOpacity>
 
         <TouchableOpacity onPress={this.deleteItem}>
           <Icon name={'ios-remove-circle-outline'} size={20} color='#900'/>

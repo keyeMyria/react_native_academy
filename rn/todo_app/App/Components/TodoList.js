@@ -82,6 +82,7 @@ export default class TodoList extends React.Component {
         onToggleCompleted={this.props.onToggleCompleted}
         onDeleteItem={this.props.onDeleteItem}
         onUpdateItem={this.props.onUpdateItem}
+        onAttachImage={this.props.onAttachImage}
       >
           {item.content}
       </TodoItem>
