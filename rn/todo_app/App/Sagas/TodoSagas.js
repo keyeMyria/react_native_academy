@@ -1,6 +1,22 @@
 import { call, put } from 'redux-saga/effects'
 import { path } from 'ramda'
 import TodoActions from '../Redux/TodoRedux'
+import NavigationActions from 'react-navigation/src/NavigationActions'
+
+export function * register (api, {username, password, email}) {
+  const response = yield call(api.register, username, password, email)
+
+  if (response.ok) {
+    yield put(TodoActions.registerSuccess())
+    // Navigates to login screen, user has to log in before using the App
+    const nav = NavigationActions.navigate({
+      routeName: 'LaunchScreen',
+    });
+    yield put(nav)
+  } else {
+    yield put(TodoActions.requestError(response.data))
+  }
+}
 
 export function * login (api, {username, password}) {
   const response = yield call(api.login, username, password)

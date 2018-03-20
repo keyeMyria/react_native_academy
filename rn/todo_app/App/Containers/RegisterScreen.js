@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
-import { AsyncStorage, ActivityIndicator, Button, Text, TextInput, View } from 'react-native'
+import { ActivityIndicator, Button, Text, TextInput, View } from 'react-native'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 
 import TodoActions from '../Redux/TodoRedux'
 import styles from './Styles/LaunchScreenStyles'
 
-class LaunchScreen extends Component {
+class RegisterScreen extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      email: ''
     }
   }
 
@@ -22,9 +23,9 @@ class LaunchScreen extends Component {
     }
   }
 
-  logIn = () => {
-    const {username, password} = this.state
-    this.props.login(username, password)
+  register = () => {
+    const {username, password, email} = this.state
+    this.props.register(username, password, email)
   }
 
   getInputErrors = (input) => {
@@ -40,7 +41,7 @@ class LaunchScreen extends Component {
     return (
       <View style={styles.mainContainer}>
         <Text style={styles.sectionText}>
-          You need to log in!
+          Register an account!
         </Text>
 
         <View style={styles.loginFormContainer}>
@@ -65,9 +66,19 @@ class LaunchScreen extends Component {
           />
           {this.getInputErrors('password')}
 
+          <TextInput
+            style={styles.input}
+            value={this.state.email}
+            placeholder='Email'
+            autoCorrect={false}
+            autoCapitalize={'none'}
+            keyboardType={'email-address'}
+            onChangeText={text => this.setState({email: text})}
+          />
+          {this.getInputErrors('email')}
+
           {this.getInputErrors('non_field_errors')}
-          <Button title='Log In' onPress={this.logIn} disabled={this.props.fetching} />
-          <Button title='Not a member? Register!' onPress={() => this.props.navigation.navigate('RegisterScreen')} disabled={this.props.fetching} />
+          <Button title='Register' onPress={this.register} disabled={this.props.fetching} />
           <ActivityIndicator animating={this.props.fetching} size="small" color="#00ff00" />
         </View>
       </View>
@@ -76,13 +87,12 @@ class LaunchScreen extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (username, password) => dispatch(TodoActions.loginRequest(username, password))
+  register: (username, password, email) => dispatch(TodoActions.registerRequest(username, password, email))
 })
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.todo.isAuthenticated,
   fetching: state.todo.fetching,
   errors: state.todo.error
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(LaunchScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterScreen)

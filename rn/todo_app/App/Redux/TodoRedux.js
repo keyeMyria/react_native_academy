@@ -6,6 +6,8 @@ import Immutable from 'seamless-immutable'
 const { Types, Creators } = createActions({
   loginRequest: ['username', 'password'],
   loginSuccess: ['jwtToken'],
+  registerRequest: ['username', 'password', 'email'],
+  registerSuccess: ['jwtToken'],
   allListsRequest: null,
   allListsSuccess: ['lists'],
   toggleCompletedRequest: ['listId', 'itemId', 'completed'],
@@ -66,6 +68,10 @@ export const loginRequest = state => state.merge({ fetching: true, error: null }
 
 export const loginSuccess = (state, {jwtToken}) => state.merge({ fetching: false, error: null, jwtToken, isAuthenticated: true })
 
+export const registerRequest = state => state.merge({ fetching: true, error: null })
+
+export const registerSuccess = state => state.merge({ fetching: false, error: null })
+
 export const deleteState = state => INITIAL_STATE
 
 export const toggleCompletedSuccess = (state, { lists }) => {
@@ -88,5 +94,8 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.UPDATE_LIST_REQUEST]: updateListRequest,
   [Types.LOGIN_REQUEST]: loginRequest,
   [Types.LOGIN_SUCCESS]: loginSuccess,
+  [Types.REGISTER_REQUEST]: registerRequest,
+  [Types.REGISTER_SUCCESS]: registerSuccess,
+
   [Types.DELETE_STATE]: deleteState,
 })

@@ -1,12 +1,16 @@
 import { StackNavigator, SwitchNavigator } from 'react-navigation'
 
 import AuthLoadingScreen from '../Containers/AuthLoadingScreen'
+import RegisterScreen from '../Containers/RegisterScreen'
 import LaunchScreen from '../Containers/LaunchScreen'
 import ListsScreen from '../Containers/ListsScreen'
 import NewListScreen from '../Containers/NewListScreen'
 import styles from './Styles/NavigationStyles'
 
-const AuthStack = StackNavigator({LaunchScreen: { screen: LaunchScreen }})
+const AuthStack = StackNavigator({
+  LaunchScreen: { screen: LaunchScreen },
+  RegisterScreen: { screen: RegisterScreen }
+})
 const AppStack = StackNavigator({
   ListsScreen: { screen: ListsScreen },
   NewListScreen: { screen: NewListScreen }
