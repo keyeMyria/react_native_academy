@@ -1,19 +1,26 @@
-import { StackNavigator } from 'react-navigation'
+import { StackNavigator, SwitchNavigator } from 'react-navigation'
 
+import AuthLoadingScreen from '../Containers/AuthLoadingScreen'
 import LaunchScreen from '../Containers/LaunchScreen'
 import ListsScreen from '../Containers/ListsScreen'
 import NewListScreen from '../Containers/NewListScreen'
 import styles from './Styles/NavigationStyles'
 
-// Manifest of possible screens
-const PrimaryNav = StackNavigator({
-  LaunchScreen: { screen: LaunchScreen },
+const AuthStack = StackNavigator({LaunchScreen: { screen: LaunchScreen }})
+const AppStack = StackNavigator({
   ListsScreen: { screen: ListsScreen },
   NewListScreen: { screen: NewListScreen }
+})
+
+// Manifest of possible screens
+const PrimaryNav = SwitchNavigator({
+  AuthLoadingScreen: { screen: AuthLoadingScreen },
+  Auth: AuthStack,
+  App: AppStack
 }, {
   // Default config for all screens
   headerMode: 'none',
-  initialRouteName: 'ListsScreen',
+  initialRouteName: 'AuthLoadingScreen',
   navigationOptions: {
     headerStyle: styles.header
   }

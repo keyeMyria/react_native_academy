@@ -2,6 +2,17 @@ import { call, put } from 'redux-saga/effects'
 import { path } from 'ramda'
 import TodoActions from '../Redux/TodoRedux'
 
+export function * login (api, {username, password}) {
+  const response = yield call(api.login, username, password)
+
+  if (response.ok) {
+    const jwtToken = path(['data', 'token'], response)
+    yield put(TodoActions.loginSuccess(jwtToken))
+  } else {
+    yield put(TodoActions.requestError(response.data))
+  }
+}
+
 export function * getAllLists (api) {
   const response = yield call(api.getAllLists)
 

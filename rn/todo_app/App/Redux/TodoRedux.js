@@ -4,6 +4,8 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
+  loginRequest: ['username', 'password'],
+  loginSuccess: ['jwtToken'],
   allListsRequest: null,
   allListsSuccess: ['lists'],
   toggleCompletedRequest: ['listId', 'itemId', 'completed'],
@@ -14,7 +16,8 @@ const { Types, Creators } = createActions({
   addItemRequest: ['listId', 'itemData'],
   addListRequest: ['listData'],
   updateListRequest: ['listId', 'listData'],
-  requestError: null
+  requestError: ['errors'],
+  deleteState: null,
 })
 
 export const TodoTypes = Types
@@ -26,6 +29,8 @@ export const INITIAL_STATE = Immutable({
   lists: [],
   fetching: null,
   error: null,
+  jwtToken: null,
+  isAuthenticated: false,
 })
 
 /* ------------- Selectors ------------- */
@@ -40,8 +45,8 @@ export const allListsSuccess = (state, { lists }) => {
   return state.merge({ fetching: false, error: null, lists })
 }
 
-export const requestError = (state) =>
-  state.merge({ fetching: false, error: true, lists: null })
+export const requestError = (state, { errors }) =>
+  state.merge({ fetching: false, error: errors })
 
 export const toggleCompletedRequest = state => state
 
@@ -56,6 +61,12 @@ export const addListRequest = state => state
 export const updateItemRequest = state => state
 
 export const updateListRequest = state => state
+
+export const loginRequest = state => state.merge({ fetching: true, error: null })
+
+export const loginSuccess = (state, {jwtToken}) => state.merge({ fetching: false, error: null, jwtToken, isAuthenticated: true })
+
+export const deleteState = state => INITIAL_STATE
 
 export const toggleCompletedSuccess = (state, { lists }) => {
   // TODO for now we refresh ALL the lists, which is inefficient but we have to normalize state first
@@ -75,5 +86,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.ADD_LIST_REQUEST]: addListRequest,
   [Types.UPDATE_ITEM_REQUEST]: updateItemRequest,
   [Types.UPDATE_LIST_REQUEST]: updateListRequest,
-  // [Types.TOGGLE_COMPLETED_SUCCESS]: toggleCompletedSuccess,
+  [Types.LOGIN_REQUEST]: loginRequest,
+  [Types.LOGIN_SUCCESS]: loginSuccess,
+  [Types.DELETE_STATE]: deleteState,
 })

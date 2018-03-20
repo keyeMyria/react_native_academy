@@ -14,6 +14,7 @@ const create = (baseURL = 'http://127.0.0.1:8000/') => {
     timeout: 10000
   })
 
+  const login = (username, password) => api.post('api/token-auth/', {username, password})
   const getAllLists = () => api.get('lists')
   const updateTodoItem = (listId, itemId, itemData) => api.patch(`lists/${listId}/items/${itemId}/`, itemData)
   const deleteTodoItem = (listId, itemId) => api.delete(`lists/${listId}/items/${itemId}/`)
@@ -24,6 +25,7 @@ const create = (baseURL = 'http://127.0.0.1:8000/') => {
 
   return {
     // "Interface" of the API functions from step 2
+    login,
     getAllLists,
     updateTodoItem,
     deleteTodoItem,

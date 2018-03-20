@@ -42,7 +42,7 @@ const ApplicationStyles = {
       margin: 10,
       borderWidth: 1,
       borderColor: Colors.facebook,
-      color: Colors.frost
+      color: Colors.charcoal
     },
     button: {
     },
