@@ -16,6 +16,11 @@ class ListsScreen extends React.Component {
     this.props.getAllLists()
   }
 
+  logout = () => {
+    this.props.logout()
+    this.props.navigation.navigate('Auth')
+  }
+
   render () {
     const lists = this.props.lists || []
     const todoLists = lists.map(
@@ -35,6 +40,9 @@ class ListsScreen extends React.Component {
     return (
       // TODO convert to SectionList for scrolling/refresh/sections?
       <View style={style.mainContainer}>
+        <TouchableOpacity onPress={this.logout}>
+          <Icon name={'ios-exit-outline'} size={40} color='#900'/> <Text>Logout</Text>
+        </TouchableOpacity>
         <Text style={style.sectionText}>{title}</Text>
 
         <TouchableOpacity onPress={() => this.props.navigation.navigate('NewListScreen')}>
@@ -51,11 +59,11 @@ const mapDispatchToProps = (dispatch) => ({
   getAllLists: () => dispatch(TodoActions.allListsRequest()),
   toggleCompleted: (listId, itemId, completed) => dispatch(TodoActions.toggleCompletedRequest(listId, itemId, completed)),
   updateItem: (listId, itemId, itemData) => dispatch(TodoActions.updateItemRequest(listId, itemId, itemData)),
-  // updateItem: (listId, itemId, itemData) => dispatch(TodoActions.toggleCompletedRequest(listId, itemId, itemData)),
   deleteItem: (listId, itemId) => dispatch(TodoActions.deleteItemRequest(listId, itemId)),
   deleteList: (listId) => dispatch(TodoActions.deleteListRequest(listId)),
   updateList: (listId, listData) => dispatch(TodoActions.updateListRequest(listId, listData)),
-  addItem: (listId, itemData) => dispatch(TodoActions.addItemRequest(listId, itemData))
+  addItem: (listId, itemData) => dispatch(TodoActions.addItemRequest(listId, itemData)),
+  logout: () => dispatch(TodoActions.logoutRequest()),
 })
 
 const mapStateToProps = (state) => ({

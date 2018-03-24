@@ -27,7 +27,6 @@ export function * login (api, {username, password}) {
   }
 }
 
-
 export function * toggleCompleted (api, { listId, itemId, completed }) {
   const token = yield select(getToken)
   const response = yield call(api.updateTodoItem, listId, itemId, { completed }, token)
