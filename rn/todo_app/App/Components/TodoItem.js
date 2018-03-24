@@ -35,9 +35,7 @@ export default class TodoItem extends React.Component {
   updateItem = () => {
     const { listId, item } = this.props
 
-    // TODO THIS CAUSES FREEZING WHEN SUBMITTING THE CHANGE. FIX THIS
-    // this.props.onUpdateItem(listId, item.id, {content: this.state.newItemContent})
-    this.props.onUpdateItem(listId, item.id, {content: 'FIXED TEST TEXT'})
+    this.props.onUpdateItem(listId, item.id, {content: this.state.newItemContent})
 
     this.setState({
       editing: false,
@@ -84,7 +82,7 @@ export default class TodoItem extends React.Component {
     const itemEditContent = <TextInput
       style={style.todoEditItemContent}
       value={this.props.children}
-      onChange={newItemContent => this.setState({newItemContent})}
+      onChangeText={newItemContent => this.setState({newItemContent})}
     />
     const editIcon = <TouchableOpacity onPress={() => this.setState({editing: true})}>
       <Icon name={'ios-create-outline'} size={20} color='#900'/>

@@ -61,10 +61,7 @@ export default class TodoList extends React.Component {
   }
 
   updateTitle = () => {
-    // TODO Same error as with editing the TodoItem, probably the way TextInput state
-    // is handled is problematic, or some cyclic references to state <-> state, etc.
-    this.props.onUpdateList(this.props.list.id, {title: 'static title'})
-    // this.props.onUpdateList(this.props.list.id, {title: this.state.newTitle})
+    this.props.onUpdateList(this.props.list.id, {title: this.state.newTitle})
     this.setState({
       editingTitle: false,
       newTitle: ''
@@ -110,7 +107,7 @@ export default class TodoList extends React.Component {
     const listTitleEdit = <TextInput
       style={style.listTitleEdit}
       value={this.props.list.title}
-      onChange={newTitle => this.setState({newTitle})}
+      onChangeText={newTitle => this.setState({newTitle})}
     />
 
     const editIcon = <TouchableOpacity onPress={() => this.setState({editingTitle: true})}>
