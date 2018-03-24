@@ -20,3 +20,4 @@ class TODOItem(models.Model):
     content = models.TextField(help_text='What has to be done?')
     completed = models.BooleanField(default=False)
     image = models.TextField(null=True)
+    contact = models.TextField(null=True)

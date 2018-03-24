@@ -5,8 +5,9 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import ImagePicker from 'react-native-image-picker'
 
 import style from './Styles/TodoItemStyles'
+import { withNavigation } from 'react-navigation'
 
-export default class TodoItem extends React.Component {
+class TodoItem extends React.Component {
   static propTypes = {
     item: PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -67,8 +68,7 @@ export default class TodoItem extends React.Component {
         // TODO this is very slow to download, maybe sqlite is thrashing disk? Try postgresql
         this.props.onUpdateItem(listId, item.id, {image: response.data})
       }
-  });
-
+    });
   }
 
   render () {
@@ -96,6 +96,12 @@ export default class TodoItem extends React.Component {
       <Icon name={'ios-checkbox-outline'} size={20} color='#900'/>
     </TouchableOpacity>
 
+    const attachContact = <TouchableOpacity
+      onPress={() => this.props.navigation.navigate('ContactsList', { todoId: this.props.item.id, listId: this.props.listId })}
+    >
+      <Icon name={'ios-person-add-outline'} size={20} color='#900'/>
+    </TouchableOpacity>
+
     const isEditing = this.state.editing
 
     return (
@@ -103,6 +109,8 @@ export default class TodoItem extends React.Component {
         {checkIcon}
 
         {(this.props.item.image !== null) ? 'Img.' : ''}
+
+        {!isEditing && attachContact}
 
         {isEditing ? itemEditContent : itemContent}
 
@@ -120,3 +128,6 @@ export default class TodoItem extends React.Component {
     )
   }
 }
+
+
+export default withNavigation(TodoItem)
