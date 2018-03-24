@@ -143,6 +143,9 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 20,
 }
 
+JWT_AUTH = {
+    'JWT_VERIFY_EXPIRATION': False,
+}
 
 # Django Debug Toolbar shows only for these IPs
 INTERNAL_IPS = [

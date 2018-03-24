@@ -1,5 +1,5 @@
 import React from 'react'
-import { ActivityIndicator, AsyncStorage } from 'react-native'
+import { ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 
 class AuthLoadingScreen extends React.Component {

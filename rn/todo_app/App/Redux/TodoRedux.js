@@ -5,6 +5,7 @@ import Immutable from 'seamless-immutable'
 
 const { Types, Creators } = createActions({
   loginRequest: ['username', 'password'],
+  logoutRequest: null,
   loginSuccess: ['jwtToken'],
   registerRequest: ['username', 'password', 'email'],
   registerSuccess: ['jwtToken'],
@@ -37,6 +38,8 @@ export const INITIAL_STATE = Immutable({
 
 /* ------------- Selectors ------------- */
 
+export const getToken = state => state.todo.jwtToken
+
 
 /* ------------- Reducers ------------- */
 
@@ -66,13 +69,15 @@ export const updateListRequest = state => state
 
 export const loginRequest = state => state.merge({ fetching: true, error: null })
 
+export const logoutRequest = state => state.merge({ jwtToken: null, isAuthenticated: false })
+
 export const loginSuccess = (state, {jwtToken}) => state.merge({ fetching: false, error: null, jwtToken, isAuthenticated: true })
 
 export const registerRequest = state => state.merge({ fetching: true, error: null })
 
 export const registerSuccess = state => state.merge({ fetching: false, error: null })
 
-export const deleteState = state => INITIAL_STATE
+export const deleteState = () => INITIAL_STATE
 
 export const toggleCompletedSuccess = (state, { lists }) => {
   // TODO for now we refresh ALL the lists, which is inefficient but we have to normalize state first
@@ -93,6 +98,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.UPDATE_ITEM_REQUEST]: updateItemRequest,
   [Types.UPDATE_LIST_REQUEST]: updateListRequest,
   [Types.LOGIN_REQUEST]: loginRequest,
+  [Types.LOGOUT_REQUEST]: logoutRequest,
   [Types.LOGIN_SUCCESS]: loginSuccess,
   [Types.REGISTER_REQUEST]: registerRequest,
   [Types.REGISTER_SUCCESS]: registerSuccess,

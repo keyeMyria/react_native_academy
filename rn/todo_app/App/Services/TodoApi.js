@@ -14,15 +14,17 @@ const create = (baseURL = 'http://127.0.0.1:8000/') => {
     timeout: 10000
   })
 
+  const authHeaders = (token) => ({headers: {Authorization: `JWT ${token}`}})
+
   const register = (username, password, email) => api.post('users/', {username, password, email})
   const login = (username, password) => api.post('api/token-auth/', {username, password})
-  const getAllLists = () => api.get('lists')
-  const updateTodoItem = (listId, itemId, itemData) => api.patch(`lists/${listId}/items/${itemId}/`, itemData)
-  const deleteTodoItem = (listId, itemId) => api.delete(`lists/${listId}/items/${itemId}/`)
-  const deleteTodoList = (listId) => api.delete(`lists/${listId}/`)
-  const addListItem = (listId, itemData) => api.post(`lists/${listId}/items/`, itemData)
-  const addList = (listData) => api.post(`lists/`, listData)
-  const updateList = (listId, listData) => api.patch(`lists/${listId}/`, listData)
+  const getAllLists = (token) => api.get('lists/', {}, authHeaders(token))
+  const updateTodoItem = (listId, itemId, itemData, token) => api.patch(`lists/${listId}/items/${itemId}/`, itemData, authHeaders(token))
+  const deleteTodoItem = (listId, itemId, token) => api.delete(`lists/${listId}/items/${itemId}/`, {}, authHeaders(token))
+  const addListItem = (listId, itemData, token) => api.post(`lists/${listId}/items/`, itemData, authHeaders(token))
+  const addList = (listData, token) => api.post(`lists/`, listData, authHeaders(token))
+  const deleteTodoList = (listId, token) => api.delete(`lists/${listId}/`, {}, authHeaders(token))
+  const updateList = (listId, listData, token) => api.patch(`lists/${listId}/`, listData, authHeaders(token))
 
   return {
     // "Interface" of the API functions from step 2
