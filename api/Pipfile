@@ -18,6 +18,7 @@ drf-nested-routers = "*"
 [dev-packages]
 
 django-debug-toolbar = "*"
+django-silk = "*"
 
 
 [requires]
