@@ -1,6 +1,7 @@
 import React from 'react'
-import { Text, TouchableOpacity, View, TextInput } from 'react-native'
+import { Text, TouchableOpacity, View, TextInput, Share, Platform } from 'react-native'
 import PropTypes from 'prop-types'
+import _ from 'lodash'
 
 import style from './Styles/TodoListStyles'
 import TodoItem from './TodoItem'
@@ -68,6 +69,25 @@ export default class TodoList extends React.Component {
     })
   }
 
+  shareList = () => {
+    const iosOptions = {
+      subject: 'Share this ToDo list!',
+    }
+    const androidOptions = {
+      dialogTitle: 'Share this ToDo list!'
+    }
+    Share.share({message: 'message', title: 'title'}, Platform.OS === 'ios' ? iosOptions : androidOptions)
+      .then((action) => {
+        const chosenAction = _.get(action, 'action', '')
+
+        if (chosenAction === Share.sharedAction) {
+          console.tron.log('Successfully shared the ToDo List!')
+        } else if (chosenAction === Share.dismissedAction) {
+          console.tron.log('Sharing dismissed :(')
+        }
+      }, () => console.tron.log('Error while sharing the ToDo list!'))
+  }
+
   render () {
     const { id, title, items } = this.props.list
     const todoItems = items.map(item =>
@@ -101,7 +121,6 @@ export default class TodoList extends React.Component {
       </View>
     )
 
-
     // List Editing
     const listTitle = <Text style={style.todoListTitle}>{title}</Text>
     const listTitleEdit = <TextInput
@@ -122,10 +141,16 @@ export default class TodoList extends React.Component {
       <Icon name={'ios-checkbox-outline'} size={20} color='#900'/>
     </TouchableOpacity>
 
+    const shareButton = <TouchableOpacity onPress={this.shareList}>
+      <Icon name={'ios-share-alt-outline'} size={20} color='#900'/>
+    </TouchableOpacity>
+
     const isEditing = this.state.editingTitle
 
     return (
       <View style={style.todoListContainer}>
+
+        {!isEditing && shareButton}
 
         {isEditing ? listTitleEdit : listTitle}
 
