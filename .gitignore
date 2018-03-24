@@ -235,5 +235,9 @@ venv.bak/
 # Custom
 
 .idea/
+api/static/
+api/db.sqlite3
+rn/todo_app/android/.gradle
 rn/todo_app/ios/Index/
+rn/todo_app/ios/todo_app.xcodeproj/project.xcworkspace/xcuserdata/
 
