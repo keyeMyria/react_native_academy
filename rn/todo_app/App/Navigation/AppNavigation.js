@@ -6,6 +6,7 @@ import LaunchScreen from '../Containers/LaunchScreen'
 import ListsScreen from '../Containers/ListsScreen'
 import NewListScreen from '../Containers/NewListScreen'
 import ContactsList from '../Containers/ContactsList'
+import TodoItemDetails from '../Containers/TodoItemDetails'
 import styles from './Styles/NavigationStyles'
 
 const AuthStack = StackNavigator({
@@ -16,6 +17,7 @@ const AppStack = StackNavigator({
   ListsScreen: { screen: ListsScreen },
   NewListScreen: { screen: NewListScreen },
   ContactsList: { screen: ContactsList },
+  TodoItemDetails: { screen: TodoItemDetails },
 })
 
 // Manifest of possible screens

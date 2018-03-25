@@ -78,9 +78,14 @@ class TodoItem extends React.Component {
         <Icon name={checkIconName} size={40} color="#900" />
       </TouchableOpacity>
     )
-    const itemContent = <Text style={[style.todoItemContent, this.props.item.completed && {textDecorationLine: 'line-through' }]} >
-      {this.props.children}
-    </Text>
+    const itemContent = <TouchableOpacity
+      style={style.todoItemContentContainer}
+      onPress={() => this.props.navigation.navigate('TodoItemDetails', {item: this.props.item})}
+    >
+      <Text style={[style.todoItemContent, this.props.item.completed && {textDecorationLine: 'line-through' }]} >
+        {this.props.children}
+      </Text>
+    </TouchableOpacity>
     const itemEditContent = <TextInput
       style={style.todoEditItemContent}
       value={this.props.children}

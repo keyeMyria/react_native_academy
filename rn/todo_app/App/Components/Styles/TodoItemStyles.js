@@ -13,6 +13,12 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 15,
   },
+  todoItemContentContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   todoItemContent: {
     marginLeft: 20,
     flexGrow: 2,
