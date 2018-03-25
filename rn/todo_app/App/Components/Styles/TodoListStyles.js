@@ -11,11 +11,10 @@ export default StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    height: 100,
   },
   todoListItemsContainer: {
     flex: 1,
-    alignSelf: 'stretch'
+    width: '100%',
   },
   todoListTitle: {
     flex: 1,
@@ -31,7 +30,7 @@ export default StyleSheet.create({
     color: Colors.frost,
   },
   todoItem: {
-
+    // flex: 1,
   },
   listTitleEdit: {
     backgroundColor: Colors.frost,

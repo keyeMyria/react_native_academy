@@ -5,18 +5,27 @@ import Colors from '../../Themes/Colors'
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   todoItemContainer: {
+    backgroundColor: Colors.ricePaper,
     flex: 1,
-    maxHeight: 75,
+    height: 50,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 10
+    paddingHorizontal: 15,
   },
   todoItemContent: {
     marginLeft: 20
   },
   todoEditItemContent: {
-    marginLeft: 20,
-    backgroundColor: Colors.cloud
-  }
+    backgroundColor: Colors.snow,
+    padding: 10,
+  },
+  attachmentIconsContainer: {
+    // TODO align Attachment Icons
+    // borderWidth: 1,
+    // borderColor: 'red',
+    // flex: 1,
+    // alignItems: 'center',
+    // flexBasis: 10,
+  },
 })

@@ -78,7 +78,9 @@ class TodoItem extends React.Component {
         <Icon name={checkIconName} size={40} color="#900" />
       </TouchableOpacity>
     )
-    const itemContent = <Text style={style.todoItemContent}>{this.props.children}</Text>
+    const itemContent = <Text style={[style.todoItemContent, this.props.item.completed && {textDecorationLine: 'line-through' }]} >
+      {this.props.children}
+    </Text>
     const itemEditContent = <TextInput
       style={style.todoEditItemContent}
       value={this.props.children}
@@ -102,6 +104,11 @@ class TodoItem extends React.Component {
       <Icon name={'ios-person-add-outline'} size={20} color='#900'/>
     </TouchableOpacity>
 
+    const attachImage = <TouchableOpacity onPress={this.attach}>
+      <Icon name={'ios-attach-outline'} size={20} color='#900'/>
+    </TouchableOpacity>
+
+
     const isEditing = this.state.editing
 
     return (
@@ -110,11 +117,11 @@ class TodoItem extends React.Component {
 
         {(this.props.item.image !== null) ? 'Img.' : ''}
 
-        {!isEditing && attachContact}
+        <View style={style.attachmentIconsContainer}>
+          {!isEditing && attachContact}
 
-        <TouchableOpacity onPress={this.attach}>
-          <Icon name={'ios-attach-outline'} size={20} color='#900'/>
-        </TouchableOpacity>
+          {!isEditing && attachImage}
+        </View>
 
         {isEditing ? itemEditContent : itemContent}
 
