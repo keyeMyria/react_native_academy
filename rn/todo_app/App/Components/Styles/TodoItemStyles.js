@@ -5,7 +5,6 @@ import Colors from '../../Themes/Colors'
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   todoItemContainer: {
-    backgroundColor: Colors.bloodOrange,
     flex: 1,
     maxHeight: 75,
     flexDirection: 'row',

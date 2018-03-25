@@ -7,6 +7,10 @@ import style from './Styles/NewListStyles'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 class NewListsScreen extends React.Component {
+  static navigationOptions = {
+    header: null,
+  }
+
   componentWillMount() {
     this.setState({
       newListTitle: '',

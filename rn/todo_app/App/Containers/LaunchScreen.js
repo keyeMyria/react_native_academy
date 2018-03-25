@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AsyncStorage, ActivityIndicator, Button, Text, TextInput, View } from 'react-native'
+import { ActivityIndicator, Button, Text, TextInput, View } from 'react-native'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 
@@ -7,6 +7,10 @@ import TodoActions from '../Redux/TodoRedux'
 import styles from './Styles/LaunchScreenStyles'
 
 class LaunchScreen extends Component {
+  static navigationOptions = {
+    header: null,
+  }
+
   constructor (props) {
     super(props)
 

@@ -10,7 +10,7 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   todoListItemsContainer: {
     flex: 1,
@@ -21,7 +21,9 @@ export default StyleSheet.create({
     color: Colors.frost,
     padding: Metrics.smallMargin,
     alignItems: 'center',
-    textAlign: 'center'
+    textAlign: 'center',
+    width: '100%',
+    backgroundColor: Colors.bloodOrange,
   },
   todoItem: {
 

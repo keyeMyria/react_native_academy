@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
 
 import TodoActions from '../Redux/TodoRedux'
@@ -9,7 +9,11 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 class ListsScreen extends React.Component {
   static defaultProps = {
-    lists: []
+    lists2: []
+  }
+
+  static navigationOptions = {
+    header: null,
   }
 
   componentWillMount() {
@@ -21,35 +25,42 @@ class ListsScreen extends React.Component {
     this.props.navigation.navigate('Auth')
   }
 
+  todoList = (list) => <TodoList
+    list={list}
+    onToggleCompleted={(listId, itemId, completed) => this.props.toggleCompleted(listId, itemId, completed)}
+    onDeleteItem={(listId, itemId) => this.props.deleteItem(listId, itemId)}
+    onDeleteList={listId => this.props.deleteList(listId)}
+    onAddItem={(listId, itemData) => this.props.addItem(listId, itemData)}
+    onUpdateItem={(listId, itemId, itemData) => this.props.updateItem(listId, itemId, itemData)}
+    onUpdateList={(listId, listData) => this.props.updateList(listId, listData)}
+  />
+
+  todoListSeparator = () => <View style={style.todoListSeparator} />
+
   render () {
     const lists = this.props.lists || []
-    const todoLists = lists.map(
-      list =>
-        <TodoList
-          key={list.id}
-          list={list}
-          onToggleCompleted={(listId, itemId, completed) => this.props.toggleCompleted(listId, itemId, completed)}
-          onDeleteItem={(listId, itemId) => this.props.deleteItem(listId, itemId)}
-          onDeleteList={listId => this.props.deleteList(listId)}
-          onAddItem={(listId, itemData) => this.props.addItem(listId, itemData)}
-          onUpdateItem={(listId, itemId, itemData) => this.props.updateItem(listId, itemId, itemData)}
-          onUpdateList={(listId, listData) => this.props.updateList(listId, listData)}
-        />
-    )
     const title = (lists.length) ? 'Here are your lists!' : 'You have no todo lists! Add them by pressing +'
+
     return (
-      // TODO convert to SectionList for scrolling/refresh/sections?
       <View style={style.mainContainer}>
-        <TouchableOpacity onPress={this.logout}>
-          <Icon name={'ios-exit-outline'} size={40} color='#900'/> <Text>Logout</Text>
-        </TouchableOpacity>
-        <Text style={style.sectionText}>{title}</Text>
+        <View style={style.listsScreenTitleBar}>
+          <Text style={style.sectionText}>{title}</Text>
 
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('NewListScreen')}>
-          <Icon name={'ios-add-circle-outline'} size={40} color='#900'/>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('NewListScreen')}>
+            <Icon name={'ios-add-circle-outline'} size={40} color='#900'/>
+          </TouchableOpacity>
 
-        {todoLists}
+          <TouchableOpacity onPress={this.logout}>
+            <Icon name={'ios-exit-outline'} size={40} color='#900'/>
+          </TouchableOpacity>
+        </View>
+
+        <FlatList
+          data={lists}
+          keyExtractor={item => `${item.id}` }
+          renderItem={({ item }) => this.todoList(item)}
+          ItemSeparatorComponent={this.todoListSeparator}
+        />
       </View>
     )
   }
