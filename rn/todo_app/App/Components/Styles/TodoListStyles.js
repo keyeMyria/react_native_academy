@@ -28,9 +28,10 @@ export default StyleSheet.create({
   todoListTitleText: {
     ...Fonts.style.h5,
     color: Colors.frost,
+    flexGrow: 2,
   },
-  todoItem: {
-    // flex: 1,
+  editTitleButton: {
+    paddingHorizontal: 10,
   },
   listTitleEdit: {
     backgroundColor: Colors.frost,
@@ -42,5 +43,23 @@ export default StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     width: 50
-  }
+  },
+  newItemView: {
+    borderWidth: 1,
+    borderColor: Colors.bloodOrange,
+    backgroundColor: Colors.ricePaper,
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  newItemControls: {
+    width: 60,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  newItemControlText: {
+    color: Colors.facebook,
+    textDecorationLine: 'underline',
+  },
 })

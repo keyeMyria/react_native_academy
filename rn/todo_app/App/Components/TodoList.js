@@ -120,19 +120,26 @@ export default class TodoList extends React.Component {
     )
 
     const newItemControls = (
-      <View>
+      <View style={style.newItemView}>
         <TextInput
+          style={style.input}
           placeholder={'What should be done?'}
           onChangeText={newItemContent => this.setState({newItemContent})}
           spellCheck={false}
           autoCapitalize={'none'}
           autoCorrect={false}
         />
-        <TouchableOpacity onPress={this.hideAddItemControls}>
+        <TouchableOpacity
+          style={style.newItemControls}
+          onPress={this.hideAddItemControls}>
+          <Text style={style.newItemControlText}>Cancel</Text>
           <Icon name={'ios-close'} size={20} color='#900'/>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={this.confirmNewItem}>
+        <TouchableOpacity
+          style={style.newItemControls}
+          onPress={this.confirmNewItem}>
+          <Text style={style.newItemControlText}>Save</Text>
           <Icon name={'ios-create-outline'} size={20} color='#900'/>
         </TouchableOpacity>
       </View>
@@ -149,7 +156,9 @@ export default class TodoList extends React.Component {
       autoCorrect={false}
     />
 
-    const editIcon = <TouchableOpacity onPress={() => this.setState({editingTitle: true})}>
+    const editIcon = <TouchableOpacity
+      style={style.editTitleButton}
+      onPress={() => this.setState({editingTitle: true})}>
       <Icon name={'ios-create-outline'} size={20} color='#900'/>
     </TouchableOpacity>
 
@@ -199,8 +208,9 @@ export default class TodoList extends React.Component {
             {!isEditing && deleteItemButton}
           </View>
 
-          {this.state.addingNewItem && newItemControls}
         </View>
+
+        {this.state.addingNewItem && newItemControls}
 
         <View style={style.todoListItemsContainer}>
           {todoItems}
