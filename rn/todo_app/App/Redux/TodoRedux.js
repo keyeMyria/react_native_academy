@@ -11,6 +11,7 @@ const { Types, Creators } = createActions({
   registerSuccess: ['jwtToken'],
   allListsRequest: null,
   allListsSuccess: ['lists'],
+  listsWithTitleRequest: ['title'],
   toggleCompletedRequest: ['listId', 'itemId', 'completed'],
   updateItemRequest: ['listId', 'itemId', 'itemData'],
   toggleCompletedSuccess: null,
@@ -89,6 +90,7 @@ export const toggleCompletedSuccess = (state, { lists }) => {
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.ALL_LISTS_REQUEST]: allListsRequest,
   [Types.ALL_LISTS_SUCCESS]: allListsSuccess,
+  [Types.LISTS_WITH_TITLE_REQUEST]: allListsRequest,
   [Types.REQUEST_ERROR]: requestError,
   [Types.TOGGLE_COMPLETED_REQUEST]: toggleCompletedRequest,
   [Types.DELETE_ITEM_REQUEST]: deleteItemRequest,

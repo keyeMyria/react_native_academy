@@ -2,10 +2,12 @@ import { all, takeLatest, takeEvery } from 'redux-saga/effects'
 import TodoApi from '../Services/TodoApi'
 import FixtureAPI from '../Services/FixtureApi'
 import DebugConfig from '../Config/DebugConfig'
-import { register,
+import {
+  register,
   login,
   updateList,
   getAllLists,
+  getListsWithTitle,
   toggleCompleted,
   deleteTodoItem,
   deleteTodoList,
@@ -14,6 +16,7 @@ import { register,
   updateItem
 } from './TodoSagas'
 import { TodoTypes } from '../Redux/TodoRedux'
+import { throttle } from 'redux-saga'
 
 /* ------------- Types ------------- */
 
@@ -32,6 +35,7 @@ export default function * root () {
     takeLatest(TodoTypes.REGISTER_REQUEST, register, todoApi),
     takeLatest(TodoTypes.LOGIN_REQUEST, login, todoApi),
     takeLatest(TodoTypes.ALL_LISTS_REQUEST, getAllLists, todoApi),
+    throttle(5000, TodoTypes.LISTS_WITH_TITLE_REQUEST, getListsWithTitle, todoApi),
     takeEvery(TodoTypes.TOGGLE_COMPLETED_REQUEST, toggleCompleted, todoApi),
     takeEvery(TodoTypes.UPDATE_ITEM_REQUEST, updateItem, todoApi),
     takeEvery(TodoTypes.DELETE_ITEM_REQUEST, deleteTodoItem, todoApi),

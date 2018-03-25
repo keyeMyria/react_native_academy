@@ -112,6 +112,18 @@ export function * getAllLists (api) {
   }
 }
 
+export function * getListsWithTitle (api, { title }) {
+  const token = yield select(getToken)
+  const response = yield call(api.getListsWithTitle, title, token)
+
+  if (response.ok) {
+    const lists = path(['data', 'results'], response)
+    yield put(TodoActions.allListsSuccess(lists))
+  } else {
+    yield _handleErrors(response)
+  }
+}
+
 export function * addList (api, { listData }) {
   const token = yield select(getToken)
   const response = yield call(api.addList, listData, token)

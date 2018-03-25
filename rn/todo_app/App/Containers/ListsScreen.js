@@ -6,6 +6,7 @@ import TodoActions from '../Redux/TodoRedux'
 import style from './Styles/ListsScreenStyles'
 import TodoList from '../Components/TodoList'
 import Icon from 'react-native-vector-icons/Ionicons'
+import ListsFilter from '../Components/ListsFilter'
 
 class ListsScreen extends React.Component {
   static defaultProps = {
@@ -55,6 +56,8 @@ class ListsScreen extends React.Component {
           </TouchableOpacity>
         </View>
 
+        <ListsFilter onFilter={this.props.getListsWithTitle} fetching={this.props.fetching}/>
+
         <FlatList
           data={lists}
           keyExtractor={item => `${item.id}` }
@@ -68,6 +71,7 @@ class ListsScreen extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   getAllLists: () => dispatch(TodoActions.allListsRequest()),
+  getListsWithTitle: (title) => dispatch(TodoActions.listsWithTitleRequest(title)),
   toggleCompleted: (listId, itemId, completed) => dispatch(TodoActions.toggleCompletedRequest(listId, itemId, completed)),
   updateItem: (listId, itemId, itemData) => dispatch(TodoActions.updateItemRequest(listId, itemId, itemData)),
   deleteItem: (listId, itemId) => dispatch(TodoActions.deleteItemRequest(listId, itemId)),
@@ -78,7 +82,8 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 const mapStateToProps = (state) => ({
-  lists: state.todo.lists
+  lists: state.todo.lists,
+  fetching: state.todo.fetching,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListsScreen)

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import permissions, viewsets
+from rest_framework.filters import SearchFilter
 
 from .models import TODOItem, TODOList
 from .serializers import TODOItemSerializer, TODOListSerializer, UserSerializer
@@ -26,6 +27,8 @@ class TODOListViewSet(viewsets.ModelViewSet):
 
     serializer_class = TODOListSerializer
     queryset = TODOList.objects.all()
+    filter_backends = (SearchFilter,)
+    search_fields = ('title',)
 
     def perform_create(self, serializer):
         """Every TODOList is implicitly connected to the currently logged in user."""

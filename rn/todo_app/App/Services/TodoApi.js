@@ -19,6 +19,7 @@ const create = (baseURL = 'http://127.0.0.1:8000/') => {
   const register = (username, password, email) => api.post('users/', {username, password, email})
   const login = (username, password) => api.post('api/token-auth/', {username, password})
   const getAllLists = (token) => api.get('lists/', {}, authHeaders(token))
+  const getListsWithTitle = (title, token) => api.get('lists/', {search: `${title}`}, authHeaders(token))
   const updateTodoItem = (listId, itemId, itemData, token) => api.patch(`lists/${listId}/items/${itemId}/`, itemData, authHeaders(token))
   const deleteTodoItem = (listId, itemId, token) => api.delete(`lists/${listId}/items/${itemId}/`, {}, authHeaders(token))
   const addListItem = (listId, itemData, token) => api.post(`lists/${listId}/items/`, itemData, authHeaders(token))
@@ -31,6 +32,7 @@ const create = (baseURL = 'http://127.0.0.1:8000/') => {
     register,
     login,
     getAllLists,
+    getListsWithTitle,
     updateTodoItem,
     deleteTodoItem,
     deleteTodoList,
