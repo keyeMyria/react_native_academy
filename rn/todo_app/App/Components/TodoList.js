@@ -88,6 +88,20 @@ export default class TodoList extends React.Component {
       }, () => console.tron.log('Error while sharing the ToDo list!'))
   }
 
+  /**
+   * If the title is too long, truncates it with ...
+   *
+   * @param title
+   */
+  formatTitle = (title) => {
+    const maxTitleLen = 30
+
+    if (title.length > maxTitleLen) {
+      return `${title.substring(0, maxTitleLen)}...`
+    }
+    return title
+  }
+
   render () {
     const { id, title, items } = this.props.list
     const todoItems = items.map(item =>
@@ -122,7 +136,7 @@ export default class TodoList extends React.Component {
     )
 
     // List Editing
-    const listTitle = <Text style={style.todoListTitle}>{title}</Text>
+    const listTitle = <Text style={style.todoListTitleText}>{this.formatTitle(title)}</Text>
     const listTitleEdit = <TextInput
       style={style.listTitleEdit}
       value={this.props.list.title}
@@ -134,7 +148,7 @@ export default class TodoList extends React.Component {
     </TouchableOpacity>
 
     const cancelEditIcon = <TouchableOpacity onPress={() => this.setState({editingTitle: false, newTitle: ''})}>
-      <Icon name={'ios-close'} size={20} color='#900'/>
+      <Icon name={'ios-close'} size={30} color='#900'/>
     </TouchableOpacity>
 
     const saveEditIcon = <TouchableOpacity onPress={this.updateTitle}>
@@ -145,28 +159,42 @@ export default class TodoList extends React.Component {
       <Icon name={'ios-share-alt-outline'} size={20} color='#900'/>
     </TouchableOpacity>
 
+    const addItemButton = <TouchableOpacity onPress={this.showAddItemControls}>
+      <Icon name={'ios-add-circle-outline'} size={20} color='#900'/>
+    </TouchableOpacity>
+
+    const deleteItemButton = <TouchableOpacity onPress={this.deleteList}>
+      <Icon name={'ios-remove-circle-outline'} size={20} color='#900'/>
+    </TouchableOpacity>
+
+
+    const editingView = <View style={style.editingView}>
+      {cancelEditIcon}
+
+      {saveEditIcon}
+    </View>
+
     const isEditing = this.state.editingTitle
 
     return (
       <View style={style.todoListContainer}>
+        <View style={style.todoListTitle}>
+          {!isEditing && shareButton}
 
-        {!isEditing && shareButton}
+          {!isEditing && editIcon}
 
-        {isEditing ? listTitleEdit : listTitle}
+          {isEditing ? listTitleEdit : listTitle}
 
-        {isEditing ? cancelEditIcon : null}
-        {isEditing ? saveEditIcon : editIcon}
+          <View>
+            {isEditing && editingView}
 
-        <TouchableOpacity onPress={this.deleteList}>
-          <Icon name={'ios-remove-circle-outline'} size={20} color='#900'/>
-        </TouchableOpacity>
+            {!isEditing && addItemButton}
 
-        <TouchableOpacity onPress={this.showAddItemControls}>
-          <Icon name={'ios-add-circle-outline'} size={20} color='#900'/>
-        </TouchableOpacity>
+            {!isEditing && deleteItemButton}
+          </View>
 
-        {this.state.addingNewItem && newItemControls}
-
+          {this.state.addingNewItem && newItemControls}
+        </View>
 
         <View style={style.todoListItemsContainer}>
           {todoItems}

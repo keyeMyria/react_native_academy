@@ -18,6 +18,7 @@ export default StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     maxHeight: 50,
+    marginBottom: 20,
   },
   sectionText: {
     ...ApplicationStyles.screen.sectionText,

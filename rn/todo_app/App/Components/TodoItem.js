@@ -112,14 +112,14 @@ class TodoItem extends React.Component {
 
         {!isEditing && attachContact}
 
+        <TouchableOpacity onPress={this.attach}>
+          <Icon name={'ios-attach-outline'} size={20} color='#900'/>
+        </TouchableOpacity>
+
         {isEditing ? itemEditContent : itemContent}
 
         {isEditing ? cancelEditIcon : null}
         {isEditing ? saveEditIcon : editIcon}
-
-        <TouchableOpacity onPress={this.attach}>
-          <Icon name={'ios-attach-outline'} size={20} color='#900'/>
-        </TouchableOpacity>
 
         <TouchableOpacity onPress={this.deleteItem}>
           <Icon name={'ios-remove-circle-outline'} size={20} color='#900'/>
