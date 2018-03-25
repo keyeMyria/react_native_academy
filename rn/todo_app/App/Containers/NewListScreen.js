@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 
 import TodoActions from '../Redux/TodoRedux'
 import style from './Styles/NewListStyles'
-import Icon from 'react-native-vector-icons/Ionicons'
 
 class NewListsScreen extends React.Component {
   static navigationOptions = {
@@ -29,12 +28,17 @@ class NewListsScreen extends React.Component {
   render () {
     return(
       <View style={style.mainContainer}>
-        <Text style={style.sectionText}>New List will be here</Text>
-        <TextInput placeholder={'List title'} onChangeText={(newListTitle) => this.setState(...this.state, {newListTitle})} />
+        <Text style={style.sectionText}>Add new Todo List</Text>
+        <TextInput
+          style={style.input}
+          placeholder={'List title'}
+          onChangeText={newListTitle => this.setState(...this.state, {newListTitle})}
+          spellCheck={false}
+          autoCapitalize={'none'}
+          autoCorrect={false}
+        />
 
-        <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-          <Icon name={'ios-close'} size={40} color='#900'/>
-        </TouchableOpacity>
+        <Button title={'Cancel'} onPress={() => this.props.navigation.goBack()} />
         <Button title={'Add new list'} onPress={this.addNewList} />
       </View>
     )
@@ -42,10 +46,7 @@ class NewListsScreen extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  addList: (listData) => dispatch(TodoActions.addListRequest(listData))
+  addList: listData => dispatch(TodoActions.addListRequest(listData))
 })
 
-const mapStateToProps = (state) => ({
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewListsScreen)
+export default connect(null, mapDispatchToProps)(NewListsScreen)

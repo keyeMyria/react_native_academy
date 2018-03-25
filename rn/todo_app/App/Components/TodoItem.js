@@ -86,15 +86,15 @@ class TodoItem extends React.Component {
       value={this.props.children}
       onChangeText={newItemContent => this.setState({newItemContent})}
     />
-    const editIcon = <TouchableOpacity onPress={() => this.setState({editing: true})}>
+    const editIcon = <TouchableOpacity style={style.editIcon} onPress={() => this.setState({editing: true})}>
       <Icon name={'ios-create-outline'} size={20} color='#900'/>
     </TouchableOpacity>
 
-    const cancelEditIcon = <TouchableOpacity onPress={() => this.setState({editing: false, newItemContent: ''})}>
+    const cancelEditIcon = <TouchableOpacity style={style.editIcon} onPress={() => this.setState({editing: false, newItemContent: ''})}>
       <Icon name={'ios-close'} size={20} color='#900'/>
     </TouchableOpacity>
 
-    const saveEditIcon = <TouchableOpacity onPress={this.updateItem}>
+    const saveEditIcon = <TouchableOpacity style={style.editIcon} onPress={this.updateItem}>
       <Icon name={'ios-checkbox-outline'} size={20} color='#900'/>
     </TouchableOpacity>
 
@@ -115,8 +115,6 @@ class TodoItem extends React.Component {
       <View style={style.todoItemContainer}>
         {checkIcon}
 
-        {(this.props.item.image !== null) ? 'Img.' : ''}
-
         <View style={style.attachmentIconsContainer}>
           {!isEditing && attachContact}
 
@@ -125,8 +123,10 @@ class TodoItem extends React.Component {
 
         {isEditing ? itemEditContent : itemContent}
 
-        {isEditing ? cancelEditIcon : null}
-        {isEditing ? saveEditIcon : editIcon}
+        <View style={style.editingView}>
+          {isEditing ? cancelEditIcon : null}
+          {isEditing ? saveEditIcon : editIcon}
+        </View>
 
         <TouchableOpacity onPress={this.deleteItem}>
           <Icon name={'ios-remove-circle-outline'} size={20} color='#900'/>

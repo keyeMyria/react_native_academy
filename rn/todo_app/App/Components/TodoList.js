@@ -124,6 +124,9 @@ export default class TodoList extends React.Component {
         <TextInput
           placeholder={'What should be done?'}
           onChangeText={newItemContent => this.setState({newItemContent})}
+          spellCheck={false}
+          autoCapitalize={'none'}
+          autoCorrect={false}
         />
         <TouchableOpacity onPress={this.hideAddItemControls}>
           <Icon name={'ios-close'} size={20} color='#900'/>
@@ -141,6 +144,9 @@ export default class TodoList extends React.Component {
       style={style.listTitleEdit}
       value={this.props.list.title}
       onChangeText={newTitle => this.setState({newTitle})}
+      spellCheck={false}
+      autoCapitalize={'none'}
+      autoCorrect={false}
     />
 
     const editIcon = <TouchableOpacity onPress={() => this.setState({editingTitle: true})}>

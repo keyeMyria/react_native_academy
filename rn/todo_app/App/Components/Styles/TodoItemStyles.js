@@ -14,18 +14,22 @@ export default StyleSheet.create({
     paddingHorizontal: 15,
   },
   todoItemContent: {
-    marginLeft: 20
+    marginLeft: 20,
+    flexGrow: 2,
   },
   todoEditItemContent: {
     backgroundColor: Colors.snow,
     padding: 10,
   },
   attachmentIconsContainer: {
-    // TODO align Attachment Icons
-    // borderWidth: 1,
-    // borderColor: 'red',
-    // flex: 1,
-    // alignItems: 'center',
-    // flexBasis: 10,
+    paddingHorizontal: 15,
+    alignItems: 'center',
   },
+  editIcon: {
+    paddingRight: 8,
+  },
+  editingView: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  }
 })
