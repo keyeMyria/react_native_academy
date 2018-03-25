@@ -50,7 +50,6 @@ export default class TodoList extends React.Component {
   }
 
   confirmNewItem = () => {
-    console.tron.log(this.props)
     this.props.onAddItem(
       this.props.list.id,
       {content: this.state.newItemContent, completed: false}
@@ -131,16 +130,16 @@ export default class TodoList extends React.Component {
         />
         <TouchableOpacity
           style={style.newItemControls}
-          onPress={this.hideAddItemControls}>
-          <Text style={style.newItemControlText}>Cancel</Text>
-          <Icon name={'ios-close'} size={20} color='#900'/>
+          onPress={this.confirmNewItem}>
+          <Text style={style.newItemControlText}>Save</Text>
+          <Icon name={'ios-create-outline'} size={20} color='#900'/>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={style.newItemControls}
-          onPress={this.confirmNewItem}>
-          <Text style={style.newItemControlText}>Save</Text>
-          <Icon name={'ios-create-outline'} size={20} color='#900'/>
+          onPress={this.hideAddItemControls}>
+          <Text style={style.newItemControlText}>Cancel</Text>
+          <Icon name={'ios-close'} size={20} color='#900'/>
         </TouchableOpacity>
       </View>
     )

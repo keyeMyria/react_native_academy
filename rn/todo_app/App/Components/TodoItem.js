@@ -4,8 +4,10 @@ import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/Ionicons'
 import ImagePicker from 'react-native-image-picker'
 
+import TodoActions from '../Redux/TodoRedux'
 import style from './Styles/TodoItemStyles'
 import { withNavigation } from 'react-navigation'
+import { connect } from 'react-redux'
 
 class TodoItem extends React.Component {
   static propTypes = {
@@ -13,7 +15,8 @@ class TodoItem extends React.Component {
       id: PropTypes.number.isRequired,
       children: PropTypes.string.isRequired,
       completed: PropTypes.bool.isRequired,
-    }.isRequired)
+    }.isRequired),
+    listId: PropTypes.number.isRequired,
   }
 
   componentWillMount() {
@@ -53,20 +56,19 @@ class TodoItem extends React.Component {
       }
     };
     ImagePicker.showImagePicker(options, (response) => {
-      console.tron.log('Response = ', response);
 
       if (response.didCancel) {
         console.tron.log('User cancelled image picker');
       } else if (response.error) {
         console.tron.log('ImagePicker Error: ', response.error);
       } else {
-        let source = { uri: response.uri };
+        // We store the whole image locally, for display, but send only URI for simplification
+        const image = { uri: 'data:image/jpeg;base64,' + response.data };
 
-        // You can also display the image using data:
-        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+        this.props.storeItemImage(`${this.props.listId}:${this.props.item.id}`, image)
+
         const {listId, item} = this.props
-        // TODO this is very slow to download, maybe sqlite is thrashing disk? Try postgresql
-        this.props.onUpdateItem(listId, item.id, {image: response.data})
+        this.props.onUpdateItem(listId, item.id, {image: response.uri})
       }
     });
   }
@@ -141,5 +143,8 @@ class TodoItem extends React.Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  storeItemImage: (key, image) => dispatch(TodoActions.storeItemImage(key, image)),
+})
 
-export default withNavigation(TodoItem)
+export default withNavigation(connect(null, mapDispatchToProps)(TodoItem))

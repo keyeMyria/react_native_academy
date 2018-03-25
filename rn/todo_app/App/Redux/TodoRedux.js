@@ -1,5 +1,6 @@
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
+import _ from 'lodash'
 
 /* ------------- Types and Action Creators ------------- */
 
@@ -22,6 +23,7 @@ const { Types, Creators } = createActions({
   updateListRequest: ['listId', 'listData'],
   requestError: ['errors'],
   deleteState: null,
+  storeItemImage: ['key', 'image'],
 })
 
 export const TodoTypes = Types
@@ -35,11 +37,14 @@ export const INITIAL_STATE = Immutable({
   error: null,
   jwtToken: null,
   isAuthenticated: false,
+  images: {},
 })
 
 /* ------------- Selectors ------------- */
 
 export const getToken = state => state.todo.jwtToken
+
+export const getImageData = (state, key) => _.get(state, `todo.images[${key}].uri`, '')
 
 
 /* ------------- Reducers ------------- */
@@ -78,6 +83,16 @@ export const registerRequest = state => state.merge({ fetching: true, error: nul
 
 export const registerSuccess = state => state.merge({ fetching: false, error: null })
 
+export const storeItemImage = (state, {key, image}) => {
+  // debugger;
+  return state.merge({
+    images: {...
+      state.images,
+      [key]: image
+    }
+  })
+}
+
 export const deleteState = () => INITIAL_STATE
 
 export const toggleCompletedSuccess = (state, { lists }) => {
@@ -104,6 +119,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.LOGIN_SUCCESS]: loginSuccess,
   [Types.REGISTER_REQUEST]: registerRequest,
   [Types.REGISTER_SUCCESS]: registerSuccess,
+  [Types.STORE_ITEM_IMAGE]: storeItemImage,
 
   [Types.DELETE_STATE]: deleteState,
 })

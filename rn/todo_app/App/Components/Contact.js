@@ -20,7 +20,6 @@ export default class Contact extends React.Component {
   render () {
     return (
       <View style={style.contactContainer}>
-        {console.tron.log(this.props.contact)}
         <Text style={style.contactText}>{this.formatName(this.props.contact)}</Text>
         <Text style={style.contactSubtext}>{this.formatEmail(this.props.contact)}</Text>
       </View>
