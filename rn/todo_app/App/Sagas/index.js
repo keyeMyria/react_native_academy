@@ -1,6 +1,5 @@
 import { all, takeLatest, takeEvery } from 'redux-saga/effects'
 import TodoApi from '../Services/TodoApi'
-import FixtureAPI from '../Services/FixtureApi'
 import DebugConfig from '../Config/DebugConfig'
 import {
   register,
@@ -26,7 +25,8 @@ import { throttle } from 'redux-saga'
 
 // The API we use is only used from Sagas, so we create it here and pass along
 // to the sagas which need it.
-const todoApi = DebugConfig.useFixtures ? FixtureAPI : TodoApi.create()
+// Currently no fixtures for TodoApi
+const todoApi = DebugConfig.useFixtures ? TodoApi.create() : TodoApi.create()
 
 /* ------------- Connect Types To Sagas ------------- */
 

@@ -5,7 +5,6 @@ import Colors from '../../Themes/Colors'
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   filterContainer: {
-    // backgroundColor: Colors.secondaryBackground,
     flex: 1,
     maxHeight: 40,
     flexDirection: 'row',

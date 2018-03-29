@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from rest_framework.relations import HyperlinkedRelatedField, HyperlinkedIdentityField
-from rest_framework_nested.relations import NestedHyperlinkedRelatedField, NestedHyperlinkedIdentityField
+from rest_framework.relations import HyperlinkedRelatedField
+from rest_framework_nested.relations import NestedHyperlinkedIdentityField
 
 from .models import TODOItem, TODOList
 
