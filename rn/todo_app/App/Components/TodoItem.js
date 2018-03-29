@@ -3,6 +3,7 @@ import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/Ionicons'
 import ImagePicker from 'react-native-image-picker'
+import RNFetchBlob from 'react-native-fetch-blob'
 
 import TodoActions from '../Redux/TodoRedux'
 import style from './Styles/TodoItemStyles'
@@ -29,6 +30,7 @@ class TodoItem extends React.Component {
   toggleCompleted = () => {
     const { listId, item } = this.props
     this.props.onToggleCompleted(listId, item.id, !item.completed)
+
   }
 
   deleteItem = () => {
@@ -63,12 +65,16 @@ class TodoItem extends React.Component {
         console.tron.log('ImagePicker Error: ', response.error);
       } else {
         // We store the whole image locally, for display, but send only URI for simplification
-        const image = { uri: 'data:image/jpeg;base64,' + response.data };
+        const imageData = 'data:image/jpeg;base64,' + response.data
+        const path = RNFetchBlob.fs.dirs.CacheDir + `/${this.props.listId}:${this.props.item.id}`;
 
-        this.props.storeItemImage(`${this.props.listId}:${this.props.item.id}`, image)
-
-        const {listId, item} = this.props
-        this.props.onUpdateItem(listId, item.id, {image: response.uri})
+        RNFetchBlob.fs.createFile(path, imageData, 'utf8').then((success) => {
+          console.tron.log('SUCCESS: ' + success)
+          const {listId, item} = this.props
+          this.props.onUpdateItem(listId, item.id, {image: response.uri})
+        }, (err) => {
+          console.tron.log('ERRRO: ' + err)
+        })
       }
     });
   }
