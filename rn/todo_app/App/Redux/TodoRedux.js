@@ -75,7 +75,7 @@ export const updateListRequest = state => state
 
 export const loginRequest = state => state.merge({ fetching: true, error: null })
 
-export const logoutRequest = state => state.merge({ jwtToken: null, isAuthenticated: false })
+export const logoutRequest = state => INITIAL_STATE
 
 export const loginSuccess = (state, {jwtToken}) => state.merge({ fetching: false, error: null, jwtToken, isAuthenticated: true })
 
